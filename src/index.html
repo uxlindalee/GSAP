@@ -97,7 +97,7 @@
 				</div>
 				<p class="floating-text first-text">THIS IS FIRST SENTENCE</p>
 				<p class="floating-text second-text">THIS IS SECOND SENTENCE</p>
-				<p class="floating-text third-text">NUMBER</p>
+				<p class="floating-text third-text">NUMBER <span class="numberCount">100</span></p>
 			</section>
 
 			<section class="section-horizontal">
@@ -246,6 +246,130 @@
 							animation.goToAndStop(self.progress * (animation.totalFrames - 1), true);
 						},
 					});
+
+					let elements = $sectionLottie.querySelector(".third-text");
+
+					gsap.registerEffect({
+						name: "counter",
+						extendTimeline: true,
+						defaults: {
+							end: 0,
+							duration: 0.5,
+							ease: "power1",
+							increment: 1,
+						},
+						effect: (targets, config) => {
+							let tl = gsap.timeline();
+							let num = targets[0].innerText.replace(/\,/g, "");
+							targets[0].innerText = num;
+
+							tl.to(
+								targets,
+								{
+									duration: config.duration,
+									innerText: config.end,
+									//snap:{innerText:config.increment},
+									modifiers: {
+										innerText: function (innerText) {
+											return gsap.utils
+												.snap(config.increment, innerText)
+												.toString()
+												.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+										},
+									},
+									ease: config.ease,
+								},
+								0
+							);
+
+							return tl;
+						},
+					});
+
+					// *************************************************************
+					// gsap.registerPlugin(ScrollTrigger);
+
+					// sectionAnimation();
+
+					// function sectionAnimation() {
+					// 	ScrollTrigger.defaults({
+					// 		toggleActions: "restart pause resume pause",
+					// 		scrub: true,
+					// 		start: "100px 80%",
+					// 		end: "+=100",
+					// 		markers: true,
+					// 	});
+					// 	//Gather elements into an array
+					// 	let sections = gsap.utils.toArray("section");
+					// 	//console.log( sections, $(sections[0]).attr("id") );
+
+					// 	//Map let to the elements
+					// 	let section = $("section");
+
+					// 	// Animation for Sections
+					// 	sections.forEach(function (section, index) {
+					// 		gsap.set(section, { y: 100, opacity: 0 });
+
+					// 		gsap.to(section, {
+					// 			y: 0,
+					// 			opacity: 1,
+					// 			duration: 2,
+					// 			scrollTrigger: {
+					// 				trigger: sections[index],
+					// 				onEnter: () => animText(sections, index),
+					// 				onLeave: () => resetAnimText(sections, index),
+					// 			},
+					// 		});
+					// 	});
+					// }
+
+					// function resetAnimText(section, index) {
+					// 	if ($(section[index]).attr("id") == "fast-facts") {
+					// 	}
+					// }
+
+					// function animText(section, index) {
+					// 	if ($(section[index]).attr("id") == "fast-facts") {
+					// 		$(".animCounter").each(function () {
+					// 			$(this)
+					// 				.prop("Counter", 0)
+					// 				.animate(
+					// 					{
+					// 						Counter: $(this).data("count"),
+					// 					},
+					// 					{
+					// 						duration: 3000,
+					// 						easing: "swing",
+					// 						step: function (now) {
+					// 							$(this).text(
+					// 								Math.ceil(now)
+					// 									.toString()
+					// 									.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + "+"
+					// 							);
+					// 						},
+					// 					}
+					// 				);
+					// 		});
+					// 	}
+					// }
+
+					// *************************************************************
+					//Find a way to connect counter with scrolltragger
+					// gsap.to(tl, {
+					// 	scrollTrigger: {
+					// 		trigger: $sectionLottie,
+					// 		start: "top center",
+					// 		end: "bottom bottom",
+					// 		scrub: true,
+					// 		id: "section-horizontal",
+					// 	},
+					// });
+
+					let tl = gsap.timeline();
+					tl.from(".third-text", { opacity: 0 }, "+=0.5");
+					tl.counter(".numberCount", { end: 1000, increment: 10 }, "-=0.5");
+
+					// GSDevTools.create();
 
 					// horizontal scroll
 					const $sectionHorizontal = $wrap.querySelector(".section-horizontal");
