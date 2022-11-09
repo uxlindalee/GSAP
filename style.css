@@ -1,0 +1,12 @@
+.section {
+	height: 100vh;
+}
+.first-box {
+	border: 2px solid blue;
+}
+.second-box {
+	border: 2px solid yellow;
+}
+.third-box {
+	border: 2px solid red;
+}

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>NAVER - Linda Lee</title>
+	</head>
+	<body>
+		<div id="wrap">
+			<section class="line-container">
+				<div class="grid-line">
+					<div class="line"></div>
+				</div>
+				<div class="grid-line">
+					<div class="line"></div>
+				</div>
+				<div class="grid-line">
+					<div class="line"></div>
+				</div>
+				<div class="grid-line">
+					<div class="line"></div>
+				</div>
+				<div class="grid-line">
+					<div class="line"></div>
+				</div>
+			</section>
+
+			<section class="section-logo">
+				<div class="sticky">
+					<!-- <h1 class="title">NAVER</h1> -->
+					<svg
+						version="1.1"
+						id="레이어_1"
+						class="title"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						x="0px"
+						y="0px"
+						viewBox="0 0 541.1 120"
+						style="enable-background: new 0 0 541.1 120"
+						xml:space="preserve"
+					>
+						<style type="text/css">
+							.st0 {
+								fill: #2db400;
+							}
+						</style>
+						<g>
+							<path
+								class="st0"
+								d="M160.2,10.5l-39.2,100h33.3l4.7-13.2h37.6l4.7,13.2h33.3l-39.2-100H160.2z M166.6,73.2L177.8,42L189,73.2
+		H166.6z"
+							/>
+							<polygon
+								class="st0"
+								points="373.4,72.5 419,72.5 419,48.5 373.4,48.5 373.4,35 419.5,35 419.5,10.5 341.5,10.5 341.5,110.5 
+		420.5,110.5 420.5,86 373.4,86 	"
+							/>
+							<polygon class="st0" points="274.4,76.2 250.9,10.5 217.5,10.5 256.7,110.5 292,110.5 331.3,10.5 297.9,10.5 	" />
+							<polygon
+								class="st0"
+								points="78.3,64 41.1,10.5 10.2,10.5 10.2,110.5 42.5,110.5 42.5,57 79.8,110.5 110.7,110.5 110.7,10.5 
+		78.3,10.5 	"
+							/>
+							<path
+								class="st0"
+								d="M506,76.2l3-1.3c11.6-4.9,17.5-15.4,17.5-28.7c0-12.6-4.6-22-13.7-27.8c-8.4-5.4-19.4-7.9-34.5-7.9h-42.2v100
+		h31.4V82.5h11.3l19.1,27.9h33.3L506,76.2z M484.2,57H467V36h17.2c5.8,0,10.5,4.7,10.5,10.5C494.7,52.3,490,57,484.2,57z"
+							/>
+						</g>
+					</svg>
+				</div>
+			</section>
+
+			<section class="section-intro">
+				<div class="sticky">
+					<div class="textbox-intro">
+						<p class="text-intro">THIS WEBSITE IS DEVELOPED FOR PERSONAL PORTFOLIO PURPOSES.</p>
+					</div>
+					<canvas class="webgl"></canvas>
+				</div>
+			</section>
+
+			<section class="section-timeline">
+				<div class="sticky">
+					<h2>Dots spreading</h2>
+					<div class="box"></div>
+					<div class="box"></div>
+					<div class="box"></div>
+					<div class="box"></div>
+				</div>
+			</section>
+
+			<section class="section-lottie">
+				<div class="sticky">
+					<h2>Population spreading</h2>
+				</div>
+				<p class="floating-text first-text">THIS IS FIRST SENTENCE</p>
+				<p class="floating-text second-text">THIS IS SECOND SENTENCE</p>
+				<p class="floating-text third-text">NUMBER</p>
+			</section>
+
+			<section class="section-horizontal">
+				<div class="sticky">
+					<h2 class="title">Horizontal scroll</h2>
+					<div class="inwrap">
+						<ul class="img-list">
+							<li class="listitem">
+								<p class="block">This is Paris.</p>
+								<img src="../static/images/paris.png" alt="Paris" />
+							</li>
+							<li class="listitem">
+								<p class="block">This is Berlin</p>
+								<img src="../static/images/berlin.png" alt="Berlin" />
+							</li>
+							<li class="listitem">
+								<p class="block">This is Paris</p>
+								<img src="../static/images/paris.png" alt="Paris" />
+							</li>
+							<li class="listitem">
+								<p class="block">Yes I want to travel</p>
+								<img src="../static/images/berlin.png" alt="Berlin" />
+							</li>
+						</ul>
+					</div>
+					<div class="cloud">
+						<img src="../static/images/cloud.png" alt="Cloud" />
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<script src="./stats.min.js"></script>
+		<script src="./gsap.min.js"></script>
+		<script src="./ScrollTrigger.min.js"></script>
+		<script src="./lottie.min.js"></script>
+		<script src="./scroller.js"></script>
+		<script src="https://cdnjs.com/libraries/bodymovin"></script>
+		<script>
+			gsap.registerPlugin(ScrollTrigger);
+
+			(function () {
+				const $wrap = document.getElementById("wrap");
+
+				let scroller;
+				if (location.search.indexOf("scroller") > -1) {
+					scroller = window._scroller($wrap);
+				}
+
+				window.addEventListener("load", function () {
+					//logo
+					const $sectionLogo = $wrap.querySelector(".section-logo");
+					gsap.fromTo(
+						$sectionLogo.querySelector(".title"),
+						{ scale: 50, fill: "#2db400" },
+						{
+							scale: 0.5,
+							fill: "#ffffff",
+							ease: "expo.easeOut",
+							scrollTrigger: {
+								trigger: $sectionLogo,
+								start: "top top",
+								end: "bottom bottom",
+								scrub: true,
+							},
+						}
+					);
+
+					// timeline
+					const $sectionTimeline = $wrap.querySelector(".section-timeline");
+					const $sectionTimelineBoxes = $sectionTimeline.querySelectorAll(".box");
+					gsap.set($sectionTimelineBoxes[0], { x: -100, lineHeight: 0 });
+					gsap.set($sectionTimelineBoxes[1], { x: 100 });
+					gsap.set($sectionTimelineBoxes[2], { y: 100, lineHeight: 0 });
+					gsap.set($sectionTimelineBoxes[3], { y: -100 });
+
+					const timeline = gsap.timeline({ paused: true });
+					timeline.to($sectionTimelineBoxes[0], { x: 0, duration: 1, ease: "cubic.out" }, 0);
+					timeline.to($sectionTimelineBoxes[1], { x: 0, duration: 1, ease: "cubic.out" }, 0);
+					timeline.to($sectionTimelineBoxes[2], { y: 0, duration: 1, ease: "cubic.out" }, 0);
+					timeline.to($sectionTimelineBoxes[3], { y: 0, duration: 1, ease: "cubic.out" }, 0);
+
+					timeline.to($sectionTimelineBoxes[0], { x: 100, rotation: 180, duration: 1, ease: "back.out(2)" });
+					timeline.to($sectionTimelineBoxes[0], { borderRadius: "50%", backgroundColor: "#0f0", duration: 1, ease: "cubic.out" }, 1);
+					timeline.to($sectionTimelineBoxes[1], { x: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
+					timeline.to($sectionTimelineBoxes[1], { borderRadius: "50%", backgroundColor: "#f00", duration: 1, ease: "cubic.out" }, 1);
+					timeline.to($sectionTimelineBoxes[2], { y: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
+					timeline.to($sectionTimelineBoxes[2], { borderRadius: "50%", backgroundColor: "#00f", duration: 1, ease: "cubic.out" }, 1);
+					timeline.to($sectionTimelineBoxes[3], { y: 100, rotation: 180, duration: 1, ease: "back.out(2)" }, 1);
+					timeline.to($sectionTimelineBoxes[3], { borderRadius: "50%", backgroundColor: "#000", duration: 1, ease: "cubic.out" }, 1);
+
+					timeline.to($sectionTimelineBoxes[0], {
+						lineHeight: 100,
+						duration: 1,
+						ease: "cubic.out",
+						onUpdate: function () {
+							const progress = $sectionTimelineBoxes[0].style.lineHeight / 100;
+							const angle = -Math.PI / 2;
+							gsap.set($sectionTimelineBoxes[0], {
+								x: Math.cos(progress * angle) * 100,
+								y: Math.sin(progress * angle) * 100,
+							});
+							gsap.set($sectionTimelineBoxes[1], {
+								x: Math.cos(progress * angle + Math.PI) * 100,
+								y: Math.sin(progress * angle + Math.PI) * 100,
+							});
+							gsap.set($sectionTimelineBoxes[2], {
+								x: Math.sin(progress * angle) * 100,
+								y: Math.cos(progress * angle) * 100,
+							});
+							gsap.set($sectionTimelineBoxes[3], {
+								x: Math.sin(progress * angle + Math.PI) * 100,
+								y: Math.cos(progress * angle + Math.PI) * 100,
+							});
+						},
+					});
+					timeline.to($sectionTimelineBoxes[0], { y: 0, duration: 3, ease: "cubic.out" }, ">");
+					timeline.to($sectionTimelineBoxes[1], { y: 0, duration: 3, ease: "cubic.out" }, ">");
+					timeline.to($sectionTimelineBoxes[2], { x: 0, duration: 3, ease: "cubic.out" }, ">");
+					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 3, ease: "cubic.out" }, ">");
+
+					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 5, scale: 10, ease: "cubic.out" }, "endFrame");
+					ScrollTrigger.create({
+						animation: timeline,
+						trigger: $sectionTimeline,
+						scrub: 1,
+						start: "top top",
+						end: "bottom bottom",
+					});
+
+					// lottie
+					const $sectionLottie = $wrap.querySelector(".section-lottie");
+					const animation = lottie.loadAnimation({
+						container: $sectionLottie.querySelector(".sticky"),
+						path: "./lottie/bubble-explosion.json",
+						renderer: "svg",
+						loop: false,
+						autoplay: false,
+					});
+					ScrollTrigger.create({
+						trigger: $sectionLottie,
+						scrub: 2,
+						start: "top 90%",
+						end: "bottom 20%",
+						onUpdate: function (self) {
+							animation.goToAndStop(self.progress * (animation.totalFrames - 1), true);
+						},
+					});
+
+					// horizontal scroll
+					const $sectionHorizontal = $wrap.querySelector(".section-horizontal");
+					const $sectionHorizontalTitle = $sectionHorizontal.querySelector(".title");
+					const $sectionHorizontalInwrap = $sectionHorizontal.querySelector(".img-list");
+					const $sectionImageitems = $sectionHorizontalInwrap.querySelectorAll(".listitem");
+					const $sectionImagetexts = $sectionHorizontalInwrap.querySelectorAll(".block");
+					const $cloud = $sectionHorizontal.querySelector(".cloud");
+					const sectionHorizontalInwrapMoveValue = $sectionHorizontal.querySelector(".img-list").scrollWidth - $wrap.offsetWidth;
+					$sectionHorizontal.style.height = window.innerHeight + sectionHorizontalInwrapMoveValue + "px";
+
+					gsap.from($sectionImagetexts, { y: 100, color: "#333", duration: 1, ease: "cubic.out" });
+					gsap.to($sectionImagetexts[0], {
+						y: -100,
+						color: "#fff",
+						ease: "cubic.out",
+						scrollTrigger: { trigger: $sectionHorizontal, start: "top -10%", end: "bottom bottom", scrub: 1 },
+					});
+					gsap.to($sectionImagetexts[1], {
+						y: -70,
+						color: "#f00",
+						ease: "cubic.out",
+						scrollTrigger: { trigger: $sectionHorizontal, start: "top -50%", end: "bottom bottom", scrub: 1 },
+					});
+					gsap.to($sectionImagetexts[2], {
+						y: -80,
+						color: "#00f",
+						ease: "cubic.out",
+						scrollTrigger: { trigger: $sectionHorizontal, start: "top -100%", end: "bottom bottom", scrub: 1 },
+					});
+					gsap.to($sectionImagetexts[3], {
+						y: -70,
+						color: "#fff",
+						ease: "cubic.out",
+						scrollTrigger: { trigger: $sectionHorizontal, start: "bottom bottom", end: "bottom bottom", scrub: 1 },
+					});
+					gsap.to($cloud, {
+						x: sectionHorizontalInwrapMoveValue,
+						ease: "linear",
+						scrollTrigger: {
+							trigger: $sectionHorizontal,
+							start: "top top",
+							end: "bottom bottom",
+							scrub: true,
+							id: "section-horizontal",
+						},
+					});
+
+					gsap.to($sectionHorizontalInwrap, {
+						x: -sectionHorizontalInwrapMoveValue,
+						ease: "linear",
+						scrollTrigger: {
+							trigger: $sectionHorizontal,
+							start: "top -10%",
+							end: "bottom bottom",
+							scrub: true,
+							id: "section-horizontal",
+						},
+					});
+				});
+
+				let stats = new Stats();
+				document.body.appendChild(stats.dom);
+				gsap.ticker.add(function () {
+					stats.update();
+				});
+			})();
+		</script>
+	</body>
+</html>
