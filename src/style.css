@@ -151,6 +151,7 @@ section .sticky h2 {
 }
 .section-lottie .third-text {
 	width: calc(100% / 6);
+	min-height: 1000px;
 	margin-top: 150vh;
 	margin-left: calc(100% / 6);
 }

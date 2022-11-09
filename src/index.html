@@ -97,7 +97,7 @@
 				</div>
 				<p class="floating-text first-text">THIS IS FIRST SENTENCE</p>
 				<p class="floating-text second-text">THIS IS SECOND SENTENCE</p>
-				<p class="floating-text third-text">NUMBER <span class="numberCount">100</span></p>
+				<p class="floating-text third-text">NUMBER <span id="numberCount">0</span></p>
 			</section>
 
 			<section class="section-horizontal">
@@ -214,12 +214,12 @@
 							});
 						},
 					});
-					timeline.to($sectionTimelineBoxes[0], { y: 0, duration: 3, ease: "cubic.out" }, ">");
-					timeline.to($sectionTimelineBoxes[1], { y: 0, duration: 3, ease: "cubic.out" }, ">");
-					timeline.to($sectionTimelineBoxes[2], { x: 0, duration: 3, ease: "cubic.out" }, ">");
-					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 3, ease: "cubic.out" }, ">");
+					timeline.to($sectionTimelineBoxes[0], { y: 0, duration: 3, ease: "cubic.out" }, "endFrame");
+					timeline.to($sectionTimelineBoxes[1], { y: 0, duration: 3, ease: "cubic.out" }, "endFrame");
+					timeline.to($sectionTimelineBoxes[2], { x: 0, duration: 3, ease: "cubic.out" }, "endFrame");
+					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 3, ease: "cubic.out" }, "endFrame");
 
-					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 5, scale: 10, ease: "cubic.out" }, "endFrame");
+					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 5, scale: 5, ease: "cubic.out" }, "endFrame");
 					ScrollTrigger.create({
 						animation: timeline,
 						trigger: $sectionTimeline,
@@ -247,44 +247,68 @@
 						},
 					});
 
-					let elements = $sectionLottie.querySelector(".third-text");
+					// let elements = $sectionLottie.querySelector(".numberCount");
 
-					gsap.registerEffect({
-						name: "counter",
-						extendTimeline: true,
-						defaults: {
-							end: 0,
-							duration: 0.5,
-							ease: "power1",
-							increment: 1,
-						},
-						effect: (targets, config) => {
-							let tl = gsap.timeline();
-							let num = targets[0].innerText.replace(/\,/g, "");
-							targets[0].innerText = num;
+					// gsap.registerPlugin(ScrollTrigger);
+					// let numberTimeline = gsap.timeline()
+					// numberTimeline.counter('#numberCount',{end:2000,increment:5},'-=0.5')
 
-							tl.to(
-								targets,
-								{
-									duration: config.duration,
-									innerText: config.end,
-									//snap:{innerText:config.increment},
-									modifiers: {
-										innerText: function (innerText) {
-											return gsap.utils
-												.snap(config.increment, innerText)
-												.toString()
-												.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-										},
-									},
-									ease: config.ease,
-								},
-								0
-							);
+					gsap.registerPlugin(ScrollTrigger);
 
-							return tl;
-						},
-					});
+					let startCount = {let: 0};
+
+					gsap.to(startCount, {
+					let: 1000, duration: 3, ease:"none",
+					onUpdate: changeNumber(),
+					scrollTrigger: {
+						trigger: '#numberCount',
+						scrub: true,
+						start: "top 80%",
+						end: "+=150% 80%",
+					},
+					})
+
+					function changeNumber() {
+						console.log(number)
+						number.innerHTML = (startCount.let).toFixed();
+					}
+
+					// gsap.registerEffect({
+					// 	name: "counter",
+					// 	extendTimeline: true,
+					// 	defaults: {
+					// 		end: 0,
+					// 		duration: 0.5,
+					// 		ease: "power1",
+					// 		increment: 1,
+					// 	},
+					// 	effect: (targets, config) => {
+					// 		let tl = gsap.timeline();
+					// 		let num = targets[0].innerText.replace(/\,/g, "");
+					// 		targets[0].innerText = num;
+
+					// 		tl.to(
+					// 			targets,
+					// 			{
+					// 				duration: config.duration,
+					// 				innerText: config.end,
+					// 				//snap:{innerText:config.increment},
+					// 				modifiers: {
+					// 					innerText: function (innerText) {
+					// 						return gsap.utils
+					// 							.snap(config.increment, innerText)
+					// 							.toString()
+					// 							.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					// 					},
+					// 				},
+					// 				ease: config.ease,
+					// 			},
+					// 			0
+					// 		);
+
+					// 		return tl;
+					// 	},
+					// });
 
 					// *************************************************************
 					// gsap.registerPlugin(ScrollTrigger);
@@ -365,10 +389,7 @@
 					// 	},
 					// });
 
-					let tl = gsap.timeline();
-					tl.from(".third-text", { opacity: 0 }, "+=0.5");
-					tl.counter(".numberCount", { end: 1000, increment: 10 }, "-=0.5");
-
+				
 					// GSDevTools.create();
 
 					// horizontal scroll
