@@ -1,6 +1,5 @@
 import "./style.css";
 import * as THREE from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
@@ -93,7 +92,7 @@ gltfLoader.load(
 		model4.position.x = 3;
 		model4.position.z = -0.2;
 
-		model5.position.x = -5;
+		model5.position.x = -2.5;
 		model5.position.z = -0.5;
 
 		model6.position.x = 5;
@@ -194,11 +193,6 @@ camera.position.z = 0;
 camera.position.y = 3;
 camera.lookAt(0, Math.PI * -2, 0);
 scene.add(camera);
-
-// Controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.target.set(0, 0.75, 0);
-// controls.enableDamping = true;
 
 /**
  * Renderer

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>NAVER - Linda Lee</title>
+		<title>Linda Lee</title>
 	</head>
 	<body>
 		<div id="wrap">
@@ -74,11 +74,25 @@
 
 			<section class="section-intro">
 				<div class="sticky">
+					<div class="search-bar">
+						<p class="search-keyword">안녕하세요</p>
+					</div>
 					<div class="textbox-intro">
 						<p class="text-intro">THIS WEBSITE IS DEVELOPED FOR PERSONAL PORTFOLIO PURPOSES.</p>
 					</div>
 					<canvas class="webgl"></canvas>
 				</div>
+			</section>
+
+			<section class="section-person">
+				<div class="sticky">
+					<h2>Person walking</h2>
+					<p class="paragraph">Person on bicycle is coming soon</p>
+					<p class="paragraph">bicycle</p>
+					<p class="paragraph">Person</p>
+					<p class="paragraph">to be continue..</p>
+				</div>
+				<canvas class="webgl-bicycle"></canvas>
 			</section>
 
 			<section class="section-timeline">
@@ -97,7 +111,10 @@
 				</div>
 				<p class="floating-text first-text">THIS IS FIRST SENTENCE</p>
 				<p class="floating-text second-text">THIS IS SECOND SENTENCE</p>
-				<p class="floating-text third-text">NUMBER <span id="numberCount">0</span></p>
+				<p class="floating-text third-text">
+					<span class="numberCount">0</span> <br />
+					million users
+				</p>
 			</section>
 
 			<section class="section-horizontal">
@@ -126,6 +143,9 @@
 					<div class="cloud">
 						<img src="../static/images/cloud.png" alt="Cloud" />
 					</div>
+					<div class="number">
+						<span class="numberCount">0</span>
+					</div>
 				</div>
 			</section>
 		</div>
@@ -136,328 +156,6 @@
 		<script src="./lottie.min.js"></script>
 		<script src="./scroller.js"></script>
 		<script src="https://cdnjs.com/libraries/bodymovin"></script>
-		<script>
-			gsap.registerPlugin(ScrollTrigger);
-
-			(function () {
-				const $wrap = document.getElementById("wrap");
-
-				let scroller;
-				if (location.search.indexOf("scroller") > -1) {
-					scroller = window._scroller($wrap);
-				}
-
-				window.addEventListener("load", function () {
-					//logo
-					const $sectionLogo = $wrap.querySelector(".section-logo");
-					gsap.fromTo(
-						$sectionLogo.querySelector(".title"),
-						{ scale: 50, fill: "#2db400" },
-						{
-							scale: 0.5,
-							fill: "#ffffff",
-							ease: "expo.easeOut",
-							scrollTrigger: {
-								trigger: $sectionLogo,
-								start: "top top",
-								end: "bottom bottom",
-								scrub: true,
-							},
-						}
-					);
-
-					// timeline
-					const $sectionTimeline = $wrap.querySelector(".section-timeline");
-					const $sectionTimelineBoxes = $sectionTimeline.querySelectorAll(".box");
-					gsap.set($sectionTimelineBoxes[0], { x: -100, lineHeight: 0 });
-					gsap.set($sectionTimelineBoxes[1], { x: 100 });
-					gsap.set($sectionTimelineBoxes[2], { y: 100, lineHeight: 0 });
-					gsap.set($sectionTimelineBoxes[3], { y: -100 });
-
-					const timeline = gsap.timeline({ paused: true });
-					timeline.to($sectionTimelineBoxes[0], { x: 0, duration: 1, ease: "cubic.out" }, 0);
-					timeline.to($sectionTimelineBoxes[1], { x: 0, duration: 1, ease: "cubic.out" }, 0);
-					timeline.to($sectionTimelineBoxes[2], { y: 0, duration: 1, ease: "cubic.out" }, 0);
-					timeline.to($sectionTimelineBoxes[3], { y: 0, duration: 1, ease: "cubic.out" }, 0);
-
-					timeline.to($sectionTimelineBoxes[0], { x: 100, rotation: 180, duration: 1, ease: "back.out(2)" });
-					timeline.to($sectionTimelineBoxes[0], { borderRadius: "50%", backgroundColor: "#0f0", duration: 1, ease: "cubic.out" }, 1);
-					timeline.to($sectionTimelineBoxes[1], { x: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
-					timeline.to($sectionTimelineBoxes[1], { borderRadius: "50%", backgroundColor: "#f00", duration: 1, ease: "cubic.out" }, 1);
-					timeline.to($sectionTimelineBoxes[2], { y: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
-					timeline.to($sectionTimelineBoxes[2], { borderRadius: "50%", backgroundColor: "#00f", duration: 1, ease: "cubic.out" }, 1);
-					timeline.to($sectionTimelineBoxes[3], { y: 100, rotation: 180, duration: 1, ease: "back.out(2)" }, 1);
-					timeline.to($sectionTimelineBoxes[3], { borderRadius: "50%", backgroundColor: "#000", duration: 1, ease: "cubic.out" }, 1);
-
-					timeline.to($sectionTimelineBoxes[0], {
-						lineHeight: 100,
-						duration: 1,
-						ease: "cubic.out",
-						onUpdate: function () {
-							const progress = $sectionTimelineBoxes[0].style.lineHeight / 100;
-							const angle = -Math.PI / 2;
-							gsap.set($sectionTimelineBoxes[0], {
-								x: Math.cos(progress * angle) * 100,
-								y: Math.sin(progress * angle) * 100,
-							});
-							gsap.set($sectionTimelineBoxes[1], {
-								x: Math.cos(progress * angle + Math.PI) * 100,
-								y: Math.sin(progress * angle + Math.PI) * 100,
-							});
-							gsap.set($sectionTimelineBoxes[2], {
-								x: Math.sin(progress * angle) * 100,
-								y: Math.cos(progress * angle) * 100,
-							});
-							gsap.set($sectionTimelineBoxes[3], {
-								x: Math.sin(progress * angle + Math.PI) * 100,
-								y: Math.cos(progress * angle + Math.PI) * 100,
-							});
-						},
-					});
-					timeline.to($sectionTimelineBoxes[0], { y: 0, duration: 3, ease: "cubic.out" }, "endFrame");
-					timeline.to($sectionTimelineBoxes[1], { y: 0, duration: 3, ease: "cubic.out" }, "endFrame");
-					timeline.to($sectionTimelineBoxes[2], { x: 0, duration: 3, ease: "cubic.out" }, "endFrame");
-					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 3, ease: "cubic.out" }, "endFrame");
-
-					timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 5, scale: 5, ease: "cubic.out" }, "endFrame");
-					ScrollTrigger.create({
-						animation: timeline,
-						trigger: $sectionTimeline,
-						scrub: 1,
-						start: "top top",
-						end: "bottom bottom",
-					});
-
-					// lottie
-					const $sectionLottie = $wrap.querySelector(".section-lottie");
-					const animation = lottie.loadAnimation({
-						container: $sectionLottie.querySelector(".sticky"),
-						path: "./lottie/bubble-explosion.json",
-						renderer: "svg",
-						loop: false,
-						autoplay: false,
-					});
-					ScrollTrigger.create({
-						trigger: $sectionLottie,
-						scrub: 2,
-						start: "top 90%",
-						end: "bottom 20%",
-						onUpdate: function (self) {
-							animation.goToAndStop(self.progress * (animation.totalFrames - 1), true);
-						},
-					});
-
-					// let elements = $sectionLottie.querySelector(".numberCount");
-
-					// gsap.registerPlugin(ScrollTrigger);
-					// let numberTimeline = gsap.timeline()
-					// numberTimeline.counter('#numberCount',{end:2000,increment:5},'-=0.5')
-
-					gsap.registerPlugin(ScrollTrigger);
-
-					let startCount = {let: 0};
-
-					gsap.to(startCount, {
-					let: 1000, duration: 3, ease:"none",
-					onUpdate: changeNumber(),
-					scrollTrigger: {
-						trigger: '#numberCount',
-						scrub: true,
-						start: "top 80%",
-						end: "+=150% 80%",
-					},
-					})
-
-					function changeNumber() {
-						console.log(number)
-						number.innerHTML = (startCount.let).toFixed();
-					}
-
-					// gsap.registerEffect({
-					// 	name: "counter",
-					// 	extendTimeline: true,
-					// 	defaults: {
-					// 		end: 0,
-					// 		duration: 0.5,
-					// 		ease: "power1",
-					// 		increment: 1,
-					// 	},
-					// 	effect: (targets, config) => {
-					// 		let tl = gsap.timeline();
-					// 		let num = targets[0].innerText.replace(/\,/g, "");
-					// 		targets[0].innerText = num;
-
-					// 		tl.to(
-					// 			targets,
-					// 			{
-					// 				duration: config.duration,
-					// 				innerText: config.end,
-					// 				//snap:{innerText:config.increment},
-					// 				modifiers: {
-					// 					innerText: function (innerText) {
-					// 						return gsap.utils
-					// 							.snap(config.increment, innerText)
-					// 							.toString()
-					// 							.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-					// 					},
-					// 				},
-					// 				ease: config.ease,
-					// 			},
-					// 			0
-					// 		);
-
-					// 		return tl;
-					// 	},
-					// });
-
-					// *************************************************************
-					// gsap.registerPlugin(ScrollTrigger);
-
-					// sectionAnimation();
-
-					// function sectionAnimation() {
-					// 	ScrollTrigger.defaults({
-					// 		toggleActions: "restart pause resume pause",
-					// 		scrub: true,
-					// 		start: "100px 80%",
-					// 		end: "+=100",
-					// 		markers: true,
-					// 	});
-					// 	//Gather elements into an array
-					// 	let sections = gsap.utils.toArray("section");
-					// 	//console.log( sections, $(sections[0]).attr("id") );
-
-					// 	//Map let to the elements
-					// 	let section = $("section");
-
-					// 	// Animation for Sections
-					// 	sections.forEach(function (section, index) {
-					// 		gsap.set(section, { y: 100, opacity: 0 });
-
-					// 		gsap.to(section, {
-					// 			y: 0,
-					// 			opacity: 1,
-					// 			duration: 2,
-					// 			scrollTrigger: {
-					// 				trigger: sections[index],
-					// 				onEnter: () => animText(sections, index),
-					// 				onLeave: () => resetAnimText(sections, index),
-					// 			},
-					// 		});
-					// 	});
-					// }
-
-					// function resetAnimText(section, index) {
-					// 	if ($(section[index]).attr("id") == "fast-facts") {
-					// 	}
-					// }
-
-					// function animText(section, index) {
-					// 	if ($(section[index]).attr("id") == "fast-facts") {
-					// 		$(".animCounter").each(function () {
-					// 			$(this)
-					// 				.prop("Counter", 0)
-					// 				.animate(
-					// 					{
-					// 						Counter: $(this).data("count"),
-					// 					},
-					// 					{
-					// 						duration: 3000,
-					// 						easing: "swing",
-					// 						step: function (now) {
-					// 							$(this).text(
-					// 								Math.ceil(now)
-					// 									.toString()
-					// 									.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + "+"
-					// 							);
-					// 						},
-					// 					}
-					// 				);
-					// 		});
-					// 	}
-					// }
-
-					// *************************************************************
-					//Find a way to connect counter with scrolltragger
-					// gsap.to(tl, {
-					// 	scrollTrigger: {
-					// 		trigger: $sectionLottie,
-					// 		start: "top center",
-					// 		end: "bottom bottom",
-					// 		scrub: true,
-					// 		id: "section-horizontal",
-					// 	},
-					// });
-
-				
-					// GSDevTools.create();
-
-					// horizontal scroll
-					const $sectionHorizontal = $wrap.querySelector(".section-horizontal");
-					const $sectionHorizontalTitle = $sectionHorizontal.querySelector(".title");
-					const $sectionHorizontalInwrap = $sectionHorizontal.querySelector(".img-list");
-					const $sectionImageitems = $sectionHorizontalInwrap.querySelectorAll(".listitem");
-					const $sectionImagetexts = $sectionHorizontalInwrap.querySelectorAll(".block");
-					const $cloud = $sectionHorizontal.querySelector(".cloud");
-					const sectionHorizontalInwrapMoveValue = $sectionHorizontal.querySelector(".img-list").scrollWidth - $wrap.offsetWidth;
-					$sectionHorizontal.style.height = window.innerHeight + sectionHorizontalInwrapMoveValue + "px";
-
-					gsap.from($sectionImagetexts, { y: 100, color: "#333", duration: 1, ease: "cubic.out" });
-					gsap.to($sectionImagetexts[0], {
-						y: -100,
-						color: "#fff",
-						ease: "cubic.out",
-						scrollTrigger: { trigger: $sectionHorizontal, start: "top -10%", end: "bottom bottom", scrub: 1 },
-					});
-					gsap.to($sectionImagetexts[1], {
-						y: -70,
-						color: "#f00",
-						ease: "cubic.out",
-						scrollTrigger: { trigger: $sectionHorizontal, start: "top -50%", end: "bottom bottom", scrub: 1 },
-					});
-					gsap.to($sectionImagetexts[2], {
-						y: -80,
-						color: "#00f",
-						ease: "cubic.out",
-						scrollTrigger: { trigger: $sectionHorizontal, start: "top -100%", end: "bottom bottom", scrub: 1 },
-					});
-					gsap.to($sectionImagetexts[3], {
-						y: -70,
-						color: "#fff",
-						ease: "cubic.out",
-						scrollTrigger: { trigger: $sectionHorizontal, start: "bottom bottom", end: "bottom bottom", scrub: 1 },
-					});
-					gsap.to($cloud, {
-						x: sectionHorizontalInwrapMoveValue,
-						ease: "linear",
-						scrollTrigger: {
-							trigger: $sectionHorizontal,
-							start: "top top",
-							end: "bottom bottom",
-							scrub: true,
-							id: "section-horizontal",
-						},
-					});
-
-					gsap.to($sectionHorizontalInwrap, {
-						x: -sectionHorizontalInwrapMoveValue,
-						ease: "linear",
-						scrollTrigger: {
-							trigger: $sectionHorizontal,
-							start: "top -10%",
-							end: "bottom bottom",
-							scrub: true,
-							id: "section-horizontal",
-						},
-					});
-				});
-
-				let stats = new Stats();
-				document.body.appendChild(stats.dom);
-				gsap.ticker.add(function () {
-					stats.update();
-				});
-			})();
-		</script>
+		<script src="./gsap.js"></script>
 	</body>
 </html>
