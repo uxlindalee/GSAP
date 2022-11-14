@@ -214,42 +214,42 @@ const $canvasSection = $wrap.querySelector(".section-intro");
 // );
 
 // Animation
-function createAnimation(mixer1, action) {
-	let proxy = {
-		get time() {
-			return mixer1.time;
-		},
+// function createAnimation(mixer1, action) {
+// 	let proxy = {
+// 		get time() {
+// 			return mixer1.time;
+// 		},
 
-		set time(value) {
-			action.paused = false;
+// 		set time(value) {
+// 			action.paused = false;
 
-			mixer1.setTime(value);
+// 			mixer1.setTime(value);
 
-			action.paused = true;
-		},
-	};
+// 			action.paused = true;
+// 		},
+// 	};
 
-	let scrollingTL = gsap
-		.timeline({
-			scrollTrigger: {
-				trigger: $canvasSection,
+// 	let scrollingTL = gsap
+// 		.timeline({
+// 			scrollTrigger: {
+// 				trigger: $canvasSection,
 
-				start: "top top",
+// 				start: "top top",
 
-				end: "+=500%",
+// 				end: "+=500%",
 
-				pin: true,
+// 				pin: true,
 
-				scrub: true,
+// 				scrub: true,
 
-				onUpdate: function () {},
-			},
-		})
+// 				onUpdate: function () {},
+// 			},
+// 		})
 
-		.to(proxy, {
-			time: position.x * 0.01,
-		});
-}
+// 		.to(proxy, {
+// 			time: position.x * 0.01,
+// 		});
+// }
 
 // let scrollY = window.scrollY;
 // let currentSection = 0;
@@ -273,17 +273,6 @@ function createAnimation(mixer1, action) {
 // 	}
 // });
 
-const cursor = {};
-cursor.x = 0;
-cursor.y = 0;
-
-window.addEventListener("mousemove", event => {
-	cursor.x = event.clientX / sizes.width - 0.5;
-	cursor.y = event.clientY / sizes.height - 0.5;
-
-	// console.log(cursor.x, cursor.y)
-});
-
 const tick = () => {
 	const elapsedTime = clock.getElapsedTime();
 	const deltaTime = elapsedTime - previousTime;
@@ -291,9 +280,6 @@ const tick = () => {
 
 	//Update mixer
 	for (const mixer of mixers) mixer.update(deltaTime);
-	// if (mixer) {
-	// 	mixer.update(deltaTime);
-	// }
 
 	if (model) {
 		model1.position.x += 0.005;
@@ -308,14 +294,23 @@ const tick = () => {
 		model10.position.x += 0.007;
 	}
 
-	// Update controls
-	// controls.update();
-
 	// Render
 	renderer.render(scene, camera);
 
 	// Call tick again on the next frame
 	window.requestAnimationFrame(tick);
+	// cancelAnimationFrame(requestID);
 };
 
-tick();
+// tick();
+
+gsap.registerPlugin(ScrollTrigger);
+const $sectionIntro = $wrap.querySelector(".section-intro");
+
+ScrollTrigger.create({
+	trigger: $sectionIntro,
+	start: "top center",
+	end: "bottom bottom",
+	onEnter: () => tick(),
+	onLeaveBack: () => tick(),
+});
