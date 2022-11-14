@@ -1,5 +1,4 @@
 gsap.registerPlugin(ScrollTrigger);
-
 (function () {
 	const $wrap = document.getElementById("wrap");
 
@@ -20,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger);
 				ease: "expo.easeOut",
 				scrollTrigger: {
 					trigger: $sectionLogo,
-					start: "top top",
+					// start: "top top",
 					end: "bottom bottom",
 					scrub: true,
 				},

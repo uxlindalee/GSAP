@@ -1,8 +1,9 @@
 import "./style.css";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
+import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import gsap from "gsap";
 
 /**
  * Base
@@ -22,8 +23,10 @@ dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
-// let mixer = null;
-let model, model1, model2, model3, model4, model5, model6, model7, model8, model9, model10;
+let model;
+let mixer;
+// let modelClone;
+let model1, model2, model3, model4, model5, model6, model7, model8, model9, model10;
 const mixers = [];
 
 gltfLoader.load(
@@ -31,19 +34,41 @@ gltfLoader.load(
 	gltf => {
 		model = gltf.scene;
 		model.traverse(function (object) {
-			if (object.isMesh) object.castShadow = true;
+			if (object.isMesh) {
+				object.castShadow = true;
+				object.receiveShadow = true;
+				object.geometry.computeVertexNormals();
+			}
 		});
+		mixer = new THREE.AnimationMixer(model);
+		mixer.clipAction(gltf.animations[0]).play();
+		model.position.set(0, 0, 0);
+		model.scale.set(0.07, 0.07, 0.07);
+		model.castShadow = true;
+		model.receiveShadow = true;
+		// scene.add(model);
 
-		model1 = SkeletonUtils.clone(model);
-		model2 = SkeletonUtils.clone(model);
-		model3 = SkeletonUtils.clone(model);
-		model4 = SkeletonUtils.clone(model);
-		model5 = SkeletonUtils.clone(model);
-		model6 = SkeletonUtils.clone(model);
-		model7 = SkeletonUtils.clone(model);
-		model8 = SkeletonUtils.clone(model);
-		model9 = SkeletonUtils.clone(model);
-		model10 = SkeletonUtils.clone(model);
+		model1 = clone(model);
+		model2 = clone(model);
+		model3 = clone(model);
+		model4 = clone(model);
+		model5 = clone(model);
+		model6 = clone(model);
+		model7 = clone(model);
+		model8 = clone(model);
+		model9 = clone(model);
+		model10 = clone(model);
+
+		model1.position.set(0, 0, 0);
+		model2.position.set(-2, 0, 0.5);
+		model3.position.set(2, 0, 0.5);
+		model4.position.set(-1, 0, 0.7);
+		model5.position.set(-2.5, 0, -0.5);
+		model6.position.set(5, 0, 0.5);
+		model7.position.set(7, 0, 1);
+		model8.position.set(-6, 0, 3);
+		model9.position.set(5, 0, 0.5);
+		model10.position.set(5, 0, 0.9);
 
 		const mixer1 = new THREE.AnimationMixer(model1);
 		const mixer2 = new THREE.AnimationMixer(model2);
@@ -67,72 +92,23 @@ gltfLoader.load(
 		mixer9.clipAction(gltf.animations[0]).play();
 		mixer10.clipAction(gltf.animations[0]).play();
 
-		model1.scale.set(0.07, 0.07, 0.07);
-		model2.scale.set(0.07, 0.07, 0.07);
-		model3.scale.set(0.07, 0.07, 0.07);
-		model4.scale.set(0.07, 0.07, 0.07);
-		model5.scale.set(0.07, 0.07, 0.07);
-		model6.scale.set(0.07, 0.07, 0.07);
-		model7.scale.set(0.07, 0.07, 0.07);
-		model8.scale.set(0.07, 0.07, 0.07);
-		model9.scale.set(0.07, 0.07, 0.07);
-		model10.scale.set(0.07, 0.07, 0.07);
-
-		model1.position.x = -2;
-		model1.position.z = -0.5;
-
-		model2.position.x = 0;
-
-		model3.position.x = 2;
-		model3.position.z = 0.5;
-
-		model4.position.x = -1;
-		model4.position.z = 0.7;
-
-		model4.position.x = 3;
-		model4.position.z = -0.2;
-
-		model5.position.x = -2.5;
-		model5.position.z = -0.5;
-
-		model6.position.x = 5;
-		model6.position.z = 0.5;
-
-		model7.position.x = 7;
-		model7.position.z = 1;
-
-		model8.position.x = -6;
-		model8.position.z = 3;
-
-		model9.position.x = 5;
-		model9.position.z = 0.5;
-
-		model10.position.x = 5;
-		model10.position.z = 0.9;
-
-		model.castShadow = true;
-		model.receiveShadow = true;
 		scene.add(model1, model2, model3, model4, model5, model6, model7, model8, model9, model10);
-		mixers.push(mixer1, mixer2, mixer3, mixer4, mixer5, mixer6, mixer7, mixer8, mixer9, mixer10);
+		mixers.push(mixer, mixer1, mixer2, mixer3, mixer4, mixer5, mixer6, mixer7, mixer8, mixer9, mixer10);
 	},
 
 	progress => {
-		console.log("progress");
-		console.log(progress);
+		console.log("progress", progress);
 	},
 	error => {
-		console.log("error");
-		console.log(error);
+		console.log("error", error);
 	}
 );
-
 /**
  * Floor
  */
 const floor = new THREE.Mesh(
 	new THREE.PlaneGeometry(10, 10),
 	new THREE.MeshStandardMaterial({
-		// color: "#f4f2f1",
 		metalness: 0,
 		roughness: 0.5,
 	})
@@ -211,6 +187,103 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const clock = new THREE.Clock();
 let previousTime = 0;
 
+/**
+ * gsap
+ */
+const $wrap = document.getElementById("wrap");
+const $canvasSection = $wrap.querySelector(".section-intro");
+// window.addEventListener("scroll", () => {
+// 	scrollY = canvasSection.scrollY;
+// 	console.log(scrollY);
+// });
+
+// gsap.fromTo(
+// 	canvas.scene,
+// 	{ scale: 50, fill: "#2db400" },
+// 	{
+// 		scale: 0.5,
+// 		fill: "#ffffff",
+// 		ease: "expo.easeOut",
+// 		scrollTrigger: {
+// 			trigger: canvasSection,
+// 			start: "top top",
+// 			end: "bottom bottom",
+// 			scrub: true,
+// 		},
+// 	}
+// );
+
+// Animation
+function createAnimation(mixer1, action) {
+	let proxy = {
+		get time() {
+			return mixer1.time;
+		},
+
+		set time(value) {
+			action.paused = false;
+
+			mixer1.setTime(value);
+
+			action.paused = true;
+		},
+	};
+
+	let scrollingTL = gsap
+		.timeline({
+			scrollTrigger: {
+				trigger: $canvasSection,
+
+				start: "top top",
+
+				end: "+=500%",
+
+				pin: true,
+
+				scrub: true,
+
+				onUpdate: function () {},
+			},
+		})
+
+		.to(proxy, {
+			time: position.x * 0.01,
+		});
+}
+
+// let scrollY = window.scrollY;
+// let currentSection = 0;
+
+// window.addEventListener("scroll", () => {
+// 	scrollY = window.scrollY;
+
+// 	const newSection = Math.round(scrollY / sizes.height);
+
+// 	if (newSection != currentSection) {
+// 		currentSection = newSection;
+
+// 		// console.log(sectionMeshes)
+// 		gsap.to(sectionMeshes[currentSection].rotation, {
+// 			duration: 1.5,
+// 			ease: "power2.inOut",
+// 			x: "+=6",
+// 			y: "+=3",
+// 			z: "+=1.5",
+// 		});
+// 	}
+// });
+
+const cursor = {};
+cursor.x = 0;
+cursor.y = 0;
+
+window.addEventListener("mousemove", event => {
+	cursor.x = event.clientX / sizes.width - 0.5;
+	cursor.y = event.clientY / sizes.height - 0.5;
+
+	// console.log(cursor.x, cursor.y)
+});
+
 const tick = () => {
 	const elapsedTime = clock.getElapsedTime();
 	const deltaTime = elapsedTime - previousTime;
@@ -218,6 +291,9 @@ const tick = () => {
 
 	//Update mixer
 	for (const mixer of mixers) mixer.update(deltaTime);
+	// if (mixer) {
+	// 	mixer.update(deltaTime);
+	// }
 
 	if (model) {
 		model1.position.x += 0.005;
