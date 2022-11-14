@@ -285,11 +285,11 @@ const tick = () => {
 		model1.position.x += 0.005;
 		model2.position.x += 0.003;
 		model3.position.x -= 0.007;
-		model4.position.x += 0.001;
-		model5.position.x -= 0.007;
-		model6.position.x += 0.007;
+		model4.position.x += 0.009;
+		model5.position.x -= 0.002;
+		model6.position.x += 0.004;
 		model7.position.x -= 0.007;
-		model8.position.x += 0.001;
+		model8.position.x += 0.009;
 		model9.position.x -= 0.002;
 		model10.position.x += 0.007;
 	}
@@ -307,6 +307,7 @@ const tick = () => {
 gsap.registerPlugin(ScrollTrigger);
 const $sectionIntro = $wrap.querySelector(".section-intro");
 
+console.log("is this here working?");
 ScrollTrigger.create({
 	trigger: $sectionIntro,
 	start: "top center",
