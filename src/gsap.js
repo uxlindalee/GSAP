@@ -1,5 +1,5 @@
-gsap.registerPlugin(ScrollTrigger);
-(function () {
+// gsap.registerPlugin(ScrollTrigger);
+
 	const $wrap = document.getElementById("wrap");
 
 	let scroller;
@@ -43,18 +43,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 		//person
 		const $sectionPerson = $wrap.querySelector(".section-person");
-		const $sectionPersonBoxes = $sectionPerson.querySelectorAll(".paragraph");
+    const $sectionPersonBoxes = $sectionPerson.querySelectorAll(".paragraph");
+    const $zombie = $sectionPerson.querySelector('.zombie')
 
-		gsap.set($sectionPersonBoxes, { x: 100, opacity: 0, color: "#333" });
+    gsap.set($sectionPersonBoxes, { x: 100, opacity: 0, color: "#333" });
+    
+    gsap.fromTo(
+			$zombie,
+			{ x: "100",},
+			{
+				x: "-400",
+				ease: "expo.easeOut",
+				scrollTrigger: {
+					trigger: $sectionPerson,
+					start: "top center",
+					end: "bottom bottom",
+					scrub: true,
+				},
+			}
+		);
 		const personTL = gsap.timeline({ paused: true });
 		personTL.to($sectionPersonBoxes[0], { x: -400, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
 		personTL.to($sectionPersonBoxes[1], { y: -100, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
-		personTL.to($sectionPersonBoxes[2], { y: -100, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
-		personTL.to($sectionPersonBoxes[3], { y: -100, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
 		personTL.to($sectionPersonBoxes[0], { y: 0, duration: 1, ease: "cubic.out" }, 0);
 		personTL.to($sectionPersonBoxes[1], { y: 100, duration: 1, ease: "cubic.out" }, 0);
-		personTL.to($sectionPersonBoxes[2], { y: 0, duration: 1, ease: "cubic.out" }, 0);
-		personTL.to($sectionPersonBoxes[3], { y: 0, duration: 1, ease: "cubic.out" }, 0);
 		ScrollTrigger.create({
 			animation: personTL,
 			trigger: $sectionPerson,
@@ -252,4 +264,3 @@ gsap.registerPlugin(ScrollTrigger);
 	gsap.ticker.add(function () {
 		stats.update();
 	});
-})();

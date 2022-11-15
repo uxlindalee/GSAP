@@ -1,9 +1,14 @@
-import "./style.css";
+import "./css/style.css";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import Stats from "stats.js";
 import gsap from "gsap";
+
+const stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom);
 
 /**
  * Base
@@ -48,8 +53,8 @@ gltfLoader.load(
 		createAnimation(mixer, action, gltf.animations[0]);
 		action.play();
 
-		model.position.set(0, 0, 0);
-		model.scale.set(0.7, 0.7, 0.7);
+		model.position.set(-2, 0, 0);
+		model.scale.set(0.07, 0.07, 0.07);
 		model.castShadow = true;
 		model.receiveShadow = true;
 		scene.add(model);
@@ -199,68 +204,50 @@ let previousTime = 0;
  */
 gsap.registerPlugin(ScrollTrigger);
 const $wrap = document.getElementById("wrap");
-const $canvasSection = $wrap.querySelector(".section-intro");
+const $sectionIntro = $wrap.querySelector(".section-intro");
 
 function createAnimation(mixer, action, clip) {
+	let proxy = {
+		get time() {
+			return mixer.time;
+		},
 
-    let proxy = {
+		set time(value) {
+			action.paused = false;
+			mixer.setTime(value);
+			action.paused = true;
+		},
+	};
 
-        get time() {
+	let scrollingTL = gsap.timeline({
+		toggleActions: "restart pause resume pause",
+		scrollTrigger: {
+			trigger: $sectionIntro,
+			start: "top top",
+			end: "+=500%",
+			scrub: true,
+			onUpdate: () => tick(),
+			onComplete: () => tick(),
+		},
+	});
 
-            return mixer.time;
-
-        },
-
-        set time(value) {
-
-            action.paused = false;
-
-            mixer.setTime(value);
-
-            action.paused = true;
-
-        }
-
-    };
-
-    let scrollingTL = gsap.timeline({
-
-        scrollTrigger: {
-
-            trigger: $canvasSection,
-
-            start: "top top",
-
-            end: "+=500%",
-
-            pin: true,
-
-            scrub: true,
-
-            onUpdate: function () {
-
-            }
-
-        }
-
-    })
-
-        .to(proxy, {
-
-            time: clip.duration,
-
-        })
-
+	scrollingTL.to(proxy, {
+		time: clip.duration,
+		repeat: 5,
+	});
 }
 
-
-
-
-
-
-
+// const modelMove = () => {
+// 	if (model) {
+// 		model.position.x = 10;
+// 	} else {
+// 		cancelAnimationFrame(tick);
+// 	}
+// 	model.position.x;
+// };
 
 const tick = () => {
+  // stats.begin();
 	const elapsedTime = clock.getElapsedTime();
 	const deltaTime = elapsedTime - previousTime;
 	previousTime = elapsedTime;
@@ -269,9 +256,10 @@ const tick = () => {
 	// for (const mixer of mixers) mixer.update(deltaTime);
 	if (mixer) mixer.update(deltaTime);
 
-
 	if (model) {
-		// model.position.x += 0.001;
+		model.position.x += 0.003;
+		// if(model.position.x = -0.015){
+		// }
 		// model1.position.x += 0.005;
 		// model2.position.x += 0.003;
 		// model3.position.x -= 0.007;
@@ -288,8 +276,23 @@ const tick = () => {
 	renderer.render(scene, camera);
 
 	// Call tick again on the next frame
-	window.requestAnimationFrame(tick);
+	// window.requestAnimationFrame(tick);
 	// cancelAnimationFrame(requestID);
+  // stats.end();
 };
 
-tick();
+// tick();
+
+const io = new IntersectionObserver(entries => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+      window.requestAnimationFrame(tick);
+
+		} else {
+			window.cancelAnimationFrame(tick);
+		}
+	});
+});
+
+const target = document.querySelector('.section-logo');
+io.observe(target);
