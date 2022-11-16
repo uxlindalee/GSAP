@@ -1,3 +1,53 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +83,7 @@ section .sticky h2 {
   left: 50%;
   top: 25px;
   font-size: 24px;
+  text-transform: uppercase;
   line-height: 1;
   margin: 0;
   -webkit-transform: translateX(-50%);
@@ -167,6 +218,21 @@ section .sticky h2 {
   height: calc(100vh * 4);
 }
 
+.section-intro .window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: block;
+  width: 150px;
+  height: 20vh;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #2db400;
+  -webkit-clip-path: path("M 0 200 L 0,75 A 5,5 0,0,1 150,75 L 200 200 z");
+          clip-path: path("M 0 200 L 0,75 A 5,5 0,0,1 150,75 L 200 200 z");
+}
+
 .section-intro .search-bar {
   position: absolute;
   padding: 10px 0;
@@ -175,7 +241,9 @@ section .sticky h2 {
   left: 50%;
   top: 50%;
   z-index: 3;
-  margin-top: 5vh;
+  margin-top: 10vh;
+  margin-left: calc(100%/-6);
+  background-color: #fff;
   border: 4px solid #2db400;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -188,14 +256,14 @@ section .sticky h2 {
   right: 0;
   z-index: 5;
   display: block;
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   background-color: #2db400;
 }
 
 .section-intro .search-bar .search-keyword {
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.7em;
   font-weight: 700;
   color: #000;
   overflow: hidden;
@@ -330,6 +398,8 @@ section .sticky h2 {
   top: 50%;
   left: 50%;
   height: 100vh;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .section-clip .clip-mask {
@@ -500,4 +570,84 @@ section .sticky h2 {
   to {
     background-position: 0 -4080px;
   }
+}
+
+.section-slider {
+  height: calc(100vh * 2);
+  background: #252825;
+  /* colours
+  ----------------------------------------- */
+}
+
+.section-slider .title {
+  color: #fff;
+  z-index: 1;
+}
+
+.section-slider .wrapper {
+  position: relative;
+  display: block;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: rotateX(40deg);
+          transform: rotateX(40deg);
+  -webkit-transform: translate(0, -15vh);
+          transform: translate(0, -15vh);
+}
+
+.section-slider .slides {
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-perspective: 200px;
+          perspective: 200px;
+  padding: 50px 0;
+}
+
+.section-slider .slide {
+  position: relative;
+  margin: auto;
+  width: 33.3333%;
+  height: 30vh;
+  -webkit-box-shadow: inset 0 0 0 5px rgba(200, 200, 200, 0.25);
+          box-shadow: inset 0 0 0 5px rgba(200, 200, 200, 0.25);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: rotateX(-40deg);
+          transform: rotateX(-40deg);
+}
+
+.section-slider .slide > .topic {
+  color: #fff;
+  font-size: 275%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  white-space: nowrap;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-transform: uppercase;
+}
+
+.section-slider .slide:nth-child(1) {
+  background: rgba(217, 38, 38, 0.5);
+}
+
+.section-slider .slide:nth-child(2) {
+  background: rgba(217, 172, 38, 0.5);
+}
+
+.section-slider .slide:nth-child(3) {
+  background: rgba(128, 217, 38, 0.5);
+}
+
+.section-slider .slide:nth-child(4) {
+  background: rgba(38, 217, 83, 0.5);
+}
+
+.section-slider .slide:nth-child(5) {
+  background: rgba(38, 217, 217, 0.5);
+}
+
+.section-slider .slide:nth-child(6) {
+  background: rgba(38, 113, 217, 0.5);
 }

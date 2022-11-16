@@ -1,4 +1,3 @@
-console.clear();
 
 const $sectionClip = document.querySelector('.section-clip');
 const $clipMask = document.querySelector(".clip-mask");
@@ -75,3 +74,16 @@ function resize() {
   
   ScrollTrigger.refresh();
 }
+
+
+const ioClip = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      $clipImg.play();
+    } else {
+      $clipImg.pause();
+      $clipImg.currentTime = 0;
+		}
+	});
+});
+ioClip.observe($sectionClip);

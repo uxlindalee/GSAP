@@ -1,0 +1,188 @@
+.section-slider {
+  height: calc(100vh * 2);
+  background: #252825;
+  .title {color: #fff; z-index: 1;}
+
+  .wrapper {
+    position: relative;
+    // top: 50%;
+    // left: 50%;
+    display: block;
+    transform-style: preserve-3d;
+    transform: rotateX(40deg);
+    transform: translate(0,-15vh);
+  }
+  .slides {
+    transform-style: preserve-3d;
+    perspective: 200px;
+    padding: 50px 0;
+  }
+  .slide {
+    position: relative;
+    margin: auto;
+    width: 33.3333%;
+    height: 30vh;
+    box-shadow: inset 0 0 0 5px rgba(200,200,200,.25);
+    transform-origin: 0 0;
+    transform:rotateX(-40deg);
+    >.topic {
+      color: #fff;
+      font-size: 275%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+      text-transform: uppercase;
+    }
+  }
+  
+  
+  /* colours
+  ----------------------------------------- */
+  
+  .slide:nth-child(1) {
+    background: hsla(0, 70%, 50%, .5);
+  }
+  .slide:nth-child(2) {
+    background: hsla(45, 70%, 50%, .5);
+  }
+  .slide:nth-child(3) {
+    background: hsla(90, 70%, 50%, .5);
+  }
+  .slide:nth-child(4) {
+    background: hsla(135, 70%, 50%, .5);
+  }
+  .slide:nth-child(5) {
+    background: hsla(180, 70%, 50%, .5);
+  }
+  .slide:nth-child(6) {
+    background: hsla(215, 70%, 50%, .5);
+  }
+  
+  
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// :root {
+//   --scenePerspective: 1;
+//   --scenePerspectiveOriginX: 50;
+//   --scenePerspectiveOriginY: 30;
+//   --itemZ: 2;
+//   --cameraSpeed: 150; // Where 1 is the fastest
+//   --cameraZ: 0;
+//   --viewportHeight: 0;
+// }
+
+// Set 3D scene
+
+// .viewport {
+//   height: calc(var(--viewportHeight) * 1px);
+
+//   .scene3D-container {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     perspective: calc(var(--scenePerspective) * var(--cameraSpeed) * 1px);
+//     perspective-origin: calc(var(--scenePerspectiveOriginX) * 1%)
+//       calc(var(--scenePerspectiveOriginY) * 1%);
+//     will-change: perspective-origin;
+//     transform: translate3d(0, 0, 0); //Allow Hardware-Accelerated CSS
+
+//     .scene3D {
+//       position: absolute;
+//       top: 0;
+//       height: 100vh;
+//       width: 100%;
+//       transform-style: preserve-3d;
+//       transform: translateZ(calc(var(--cameraZ) * 1px));
+//       will-change: transform;
+
+//       > div {
+//         position: absolute;
+//         display: block;
+//         width: 100%;
+//         top: 40%;
+
+//         @media only screen and (min-width: 600px) {
+//           width: 45%;
+//         }
+
+//         &:nth-child(2n) {
+//           left: 0;
+//         }
+
+//         &:nth-child(2n + 1) {
+//           right: 0;
+//         }
+
+//         @for $i from 0 through 25 {
+//           &:nth-child(#{$i}) {
+//             transform: translate3D(
+//               random(50) - 25 * 1%,
+//               random(100) - 50 * 1%,
+//               calc(var(--itemZ) * var(--cameraSpeed) * #{$i} * -1px)
+//             );
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ----------
+// // Styling
+// // ----------
+// @import url("https://fonts.googleapis.com/css?family=Playfair+Display+SC:900");
+
+
+// .scene3D {
+//   > div {
+//     padding: 2rem;
+
+//     h2 {
+//       margin-top: 0;
+//       font-family: "Playfair Display SC", serif;
+//       font-size: 1.5rem;
+//     }
+
+//     @for $i from 0 through 25 {
+//       &:nth-child(#{$i}) {
+//         background-color: hsl(-30 + ($i * 30), 100%, 88%);
+//       }
+//     }
+//   }
+// }

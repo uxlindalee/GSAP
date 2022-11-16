@@ -39,8 +39,7 @@ const marquee = {
 			for (let i = 0; i < times; i++) {
 				marquee.setAttribute("data-multitext", marquee.getAttribute("data-multitext") + text);
 			}
-		}
-
+		} 
 		marquee.style.animationDuration = (marquee.getAttribute("data-baseduration") / 1000) * wWidth + "s";
 	},
 
@@ -52,27 +51,28 @@ const marquee = {
 			marquee.setAttribute("data-text", text);
 
 			that.resizeMarquee(marquee);
-
 			marquee.classList.add(that.playClass);
 
 			window.addEventListener("resize", function () {
 				that.resizeMarquee(marquee);
 			});
-		});
-	},
+    });
+  },
 };
 
 marquee.init();
 
-// const io = new IntersectionObserver(entries => {
-// 	entries.forEach(entry => {
-// 		if (entry.isIntersecting) {
-// 			marquee.init();
-// 		} else {
-// 			status = false;
-// 		}
-// 	});
-// });
+const $sectionLogo = document.querySelector('.section-logo');
+let marqueeText = document.querySelector('.marquee p');
 
-// const target = document.querySelector('.section-logo');
-// io.observe(target);
+const io = new IntersectionObserver(entries => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+      marqueeText.classList.remove('marquee--play');
+      marqueeText.classList.add('marquee--play');
+		} else {
+      marqueeText.classList.remove('marquee--play');
+		}
+	});
+});
+io.observe($sectionLogo);
