@@ -18,6 +18,7 @@ section .sticky h2 {
 	left: 50%;
 	top: 25px;
 	font-size: 24px;
+  font-weight: 700;
   text-transform: uppercase;
 	line-height: 1;
 	margin: 0;
@@ -25,7 +26,6 @@ section .sticky h2 {
 }
 
 /***** Grid lines *****/
-
 .line-container {
 	position: fixed;
 	top: 0;
@@ -56,7 +56,6 @@ section .sticky h2 {
 
 
 /***** Naver Logo *****/
-
 .section-logo {
 	height: calc(100vh * 4);
   .title {
@@ -71,7 +70,6 @@ section .sticky h2 {
 
 
 /***** Marquee *****/
-
 .marquee {
 	--animation-base-time: 50s;
 	--marquee-bg: #000000;
@@ -86,45 +84,44 @@ section .sticky h2 {
 	width: 100vw;
 	max-width: 100%;
 	height: var(--marquee-height);
-}
-.marquee__inner {
-	background-color: var(--marquee-bg);
-	color: var(--marquee-color);
-	height: var(--marquee-height);
-	white-space: nowrap;
-}
-.marquee__inner::before,
-.marquee__inner::after {
-	animation: marquee linear 0s infinite paused;
-	animation-duration: var(--animation-base-time);
-	content: attr(data-multitext);
-	padding-right: 0.25em;
-}
-.marquee--play::before,
-.marquee--play::after {
-	animation-play-state: running;
-}
 
-.marquee__text {
-	font-size: var(--marquee-fontsize);
-	word-spacing: var(--marquee-wordspading);
-	display: flex;
-	align-items: center;
+  .marquee__inner {
+    background-color: var(--marquee-bg);
+    color: var(--marquee-color);
+    height: var(--marquee-height);
+    white-space: nowrap;
+  }
+  .marquee__inner::before,
+  .marquee__inner::after {
+    animation: marquee linear 0s infinite paused;
+    animation-duration: var(--animation-base-time);
+    content: attr(data-multitext);
+    padding-right: 0.25em;
+  }
+  .marquee--play::before,
+  .marquee--play::after {
+    animation-play-state: running;
+  }
+  
+  .marquee__text {
+    font-size: var(--marquee-fontsize);
+    word-spacing: var(--marquee-wordspading);
+    display: flex;
+    align-items: center;
+  }
+  
+  @keyframes marquee {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
 }
-
-@keyframes marquee {
-	from {
-		transform: translateX(0%);
-	}
-	to {
-		transform: translateX(-100%);
-	}
-}
-
 
 
 /***** Section Intro *****/
-
 .section-intro {
 	height: calc(100vh * 4);
 
@@ -236,8 +233,26 @@ section .sticky h2 {
 }
 
 
-/***** Section Person *****/
+/***** Section SVG *****/
+.section-svg {
+  height: calc(100vh * 6);
+  background: linear-gradient(
+    to bottom,
+    green,
+    black
+  );
+  #bike {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+  }
+}
 
+
+/***** Section Person *****/
 .section-person {
 	background-color: #333;
 	height: calc(100vh * 2);
@@ -254,10 +269,7 @@ section .sticky h2 {
 }
 
 
-
-
 /***** Section Timeline *****/
-
 .section-timeline {
 	position: relative;
 	height: calc(100vh * 4);
@@ -274,11 +286,13 @@ section .sticky h2 {
 }
 
 
-
-
 /***** Section Clip *****/
 .section-clip {
   height: calc(100vh *2);
+  .title {
+    color:#fff;
+    z-index: 6;
+  }
   .clip-img {
     position: relative;
     top: 50%;
@@ -298,10 +312,7 @@ section .sticky h2 {
 }
 
 
-
 /***** Section Lottie *****/
-
-/* lottie */
 .section-lottie {
 	height: calc(100vh * 8);
 	background: #fff;
@@ -343,9 +354,7 @@ section .sticky h2 {
 }
 
 
-
 /***** Section Horizontal *****/
-
 .section-horizontal {
 	height: calc(100vh * 3);
 	background: #333;
@@ -410,4 +419,61 @@ section .sticky h2 {
     font-weight: 900;
     color: #fff;
   }
+}
+
+
+/***** Section Roll *****/
+:root {
+  --fontSize: 4;
+}
+@font-face {
+  font-family: 'Bandeins-Strange';
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/BandeinsStrangeVariableGX.ttf') format('truetype');
+  font-stretch: 100% 800%;
+  font-weight: 200 800;
+  font-display: block;
+}
+.section-roll {
+  color: white;
+  -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  height: calc(100vh * 5);
+  background: #000;
+  
+  .stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+  
+  .tube {
+    position: sticky;
+    top: 50vh;
+    left: 50vw;
+    perspective: 100vw;
+  }
+  
+  .tube__inner {
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  
+  .line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-family: 'Bandeins-Strange';
+    font-size: calc(var(--fontSize) * 1vw);
+    font-stretch: 800%;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    transform-style: preserve-3d;
+  }
+  
 }

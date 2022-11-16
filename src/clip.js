@@ -5,7 +5,7 @@ const $clipImg = document.querySelector(".clip-img");
 const circle = document.querySelector("#circle");
 const pad = 4;
 
-let radius = +circle.getAttribute("r");
+let clipRadius = +circle.getAttribute("r");
 let imgWidth, imgHeight;
 
 gsap.set($clipImg, {
@@ -27,7 +27,7 @@ var tl = gsap.timeline({
   })
   .to(circle, {
     attr: {
-      r: () => radius
+      r: () => clipRadius
     }
   }, 0)
   .to($clipImg, {
@@ -66,7 +66,7 @@ function resize() {
     
   const dx = rectWidth / 2;
   const dy = rectHeight / 2;
-  radius = Math.sqrt(dx * dx + dy * dy);
+  clipRadius = Math.sqrt(dx * dx + dy * dy);
             
   gsap.set($clipImg, { width, height });
     

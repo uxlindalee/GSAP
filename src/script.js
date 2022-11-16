@@ -74,7 +74,7 @@ const floor = new THREE.Mesh(
 	new THREE.PlaneGeometry(10, 10),
 	new THREE.MeshStandardMaterial({
 		metalness: 0,
-		roughness: 0.5,
+		roughness: 1,
 	})
 );
 floor.receiveShadow = true;
@@ -99,10 +99,10 @@ scene.add(floor);
 // directionalLight.shadow.camera.bottom = -7;
 // directionalLight.position.set(0, 5, 0);
 // scene.add(directionalLight, lightHelper);
-const light = new THREE.DirectionalLight( 0xffffff, 0.5, 100 );
+const light = new THREE.DirectionalLight( 0xffffff, 0.5, 1000 );
 light.position.set( 0, 100, 0 );
 light.castShadow = true;
-light.shadow.camera.near = 0.1;
+light.shadow.camera.near = 1;
 scene.add( light );
 
 /**
