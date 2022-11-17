@@ -1,27 +1,17 @@
 const $sectionSvg = document.querySelector('.section-svg');
 let path = $sectionSvg.querySelector('#bike-path');
 
-// Get length of path... ~577px in this case
 let pathLength = path.getTotalLength();
-
-// Make very long dashes (the length of the path itself)
 path.style.strokeDasharray = pathLength + ' ' + pathLength;
-
-// Offset the dashes so the it appears hidden entirely
 path.style.strokeDashoffset = pathLength;
 path.getBoundingClientRect();
 
 // When the page scrolls...
 window.addEventListener("scroll", function(e) {
- 
-  // What % down is it? 
-  // Had to try three or four differnet methods here. Kind of a cross-browser nightmare.
-  let scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-    
-  // Length to offset the dashes
+  let scrollPercentage = ((document.documentElement.scrollTop - $sectionSvg.offsetTop) + $sectionSvg.scrollTop) / ($sectionSvg.scrollHeight - window.innerHeight);
   let drawLength = pathLength * scrollPercentage;
   path.style.strokeDashoffset = pathLength - drawLength;
-    
+  
   if (scrollPercentage >= 0.99) {
     path.style.strokeDasharray = "none";
   } else {
@@ -29,19 +19,31 @@ window.addEventListener("scroll", function(e) {
   }
 });
 
+// const timelineBicycle = gsap.timeline({ paused: true });
+// timeline.to(path, { x: 100, duration: 1, ease: "cubic.out" }, 0);
+
+// ScrollTrigger.create({
+// 			animation: timelineBicycle,
+// 			trigger: $sectionSvg,
+// 			scrub: 1,
+// 			start: "top top",
+//   end: "bottom bottom",
+//   onUpdate: function () {
+        
+//       }
+// 		});
 
 
 
 
 
-		//roll
+		//Thank you rolls out
 		select = e => document.querySelector(e);
 		selectAll = e => document.querySelectorAll(e);
 		
-		// const $sectionRoll = select('.section-roll');
-		const stage = select('.stage');
+		const tubeContainer = select('.stage');
 		const tubeInner = select(".tube__inner");
-		const clone = document.getElementsByClassName("line"); // as need to update node list
+		const clone = document.getElementsByClassName("line"); 
 		const numLines = 10;
 		const fontSize = gsap.getProperty(':root', '--fontSize');
 		const angle = 360/numLines;
@@ -51,20 +53,18 @@ window.addEventListener("scroll", function(e) {
 		function set3D() {
 			let width = window.innerWidth;
 			let fontSizePx = (width/100)*fontSize;
-			radius = (fontSizePx/2)/Math.sin((180/numLines)*(Math.PI/180)); // using Pythagoras Eq
+			radius = (fontSizePx/2)/Math.sin((180/numLines)*(Math.PI/180));
 			origin = `50% 50% -${radius}px`;
 		}
 		
 		function clodeNode() {
-			
 			for (var i = 0; i < (numLines-1); i++) {
-				let newClone = clone[0].cloneNode(true); // clone the header
-				let lineClass = "line--"+(i+2); // create class name to append
-				newClone.classList.add(lineClass); // add incremented line class
-				tubeInner.appendChild(newClone); // append the clone
+				let newClone = clone[0].cloneNode(true);
+				let lineClass = "line--"+(i+2);
+				newClone.classList.add(lineClass);
+				tubeInner.appendChild(newClone);
 			}
-			
-			clone[0].classList.add("line--1"); // add line1 class to the first node
+			clone[0].classList.add("line--1");
 		}
 		
 		function positionTxt() {
@@ -82,7 +82,7 @@ window.addEventListener("scroll", function(e) {
 				let paramSet = gsap.quickSetter(target, "css");
 				let degrees = gsap.getProperty(target, "rotateX");
 				let radians = degrees * (Math.PI/180);
-				let conversion = Math.abs(Math.cos(radians) / 2 + 0.5); // 1 - 0 half cosine wave
+				let conversion = Math.abs(Math.cos(radians) / 2 + 0.5);
 				let fontW = 200 + 700*conversion;
 				let fontS = `${100 + 700*conversion}%`;
 		
@@ -91,7 +91,6 @@ window.addEventListener("scroll", function(e) {
 					fontWeight: fontW, 
 					fontStretch: fontS 
 				});
-				console.log(fontW);
 			})
 		}
 		
@@ -129,7 +128,7 @@ window.addEventListener("scroll", function(e) {
 			positionTxt(); 
 			setProps(gsap.utils.toArray(".line"));
 			scrollRotate();
-			gsap.to(stage, { autoAlpha: 1, duration: 2, delay: 2 });
+			gsap.to(tubeContainer, { autoAlpha: 1, duration: 2, delay: 2 });
 		}
 		
 		window.onload = () => {

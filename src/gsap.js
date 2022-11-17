@@ -1,7 +1,6 @@
 // gsap.registerPlugin(ScrollTrigger);
 
 	const $wrap = document.getElementById("wrap");
-
 	let scroller;
 	if (location.search.indexOf("scroller") > -1) {
 		scroller = window._scroller($wrap);
@@ -11,7 +10,7 @@
 		//logo
 		const $sectionLogo = $wrap.querySelector(".section-logo");
 		gsap.fromTo(
-			$sectionLogo.querySelector(".title"),
+			$sectionLogo.querySelector(".svg-title"),
 			{ scale: 10, fill: "#2db400" },
 			{
 				scale: 0.5,
@@ -24,7 +23,21 @@
 					scrub: true,
 				},
 			}
-		);
+    );
+    gsap.fromTo(
+      $sectionLogo.querySelector(".text"),
+      {opacity:0,
+        
+    }, {
+        opacity: 1, y: 200, duration:1,ease:"linear",
+      scrollTrigger: {
+					trigger: $sectionLogo,
+					start: "top top",
+					end: "bottom bottom",
+					scrub: true,
+				},
+      }
+    )
 
 		//intro
 		const $sectionIntro = $wrap.querySelector(".section-intro");
@@ -41,54 +54,59 @@
 			searchBox.classList.toggle("on");
 		}
 
-		//person
-		const $sectionPerson = $wrap.querySelector(".section-person");
-    const $sectionPersonBoxes = $sectionPerson.querySelectorAll(".paragraph");
-    const $zombie = $sectionPerson.querySelector('.zombie')
-
-    gsap.set($sectionPersonBoxes, { x: 100, opacity: 0, color: "#333" });
+		//Tunnel
+		const $sectionTunnel = $wrap.querySelector(".section-tunnel");
+    const $tunnel = $sectionTunnel.querySelectorAll(".tunnel");
+    const $dialogueBox = $sectionTunnel.querySelectorAll(".dialogue-box");
+    const $opentalk = $sectionTunnel.querySelectorAll('.opentalk')
     
-    gsap.fromTo(
-			$zombie,
-			{ x: "100",},
-			{
-				x: "-400",
-				ease: "expo.easeOut",
-				scrollTrigger: {
-					trigger: $sectionPerson,
-					start: "top center",
-					end: "bottom bottom",
-					scrub: true,
-				},
-			}
-		);
-		const personTL = gsap.timeline({ paused: true });
-		personTL.to($sectionPersonBoxes[0], { x: -400, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
-		personTL.to($sectionPersonBoxes[1], { y: -100, opacity: 1, color: "#fff", duration: 1, ease: "cubic.out" });
-		personTL.to($sectionPersonBoxes[0], { y: 0, duration: 1, ease: "cubic.out" }, 0);
-		personTL.to($sectionPersonBoxes[1], { y: 100, duration: 1, ease: "cubic.out" }, 0);
-		ScrollTrigger.create({
-			animation: personTL,
-			trigger: $sectionPerson,
+    gsap.set($tunnel[0], { scale:1 });
+    gsap.set($dialogueBox[0], { y:100, opacity: 0 });
+    gsap.set($dialogueBox[1], { y:100, opacity: 0 });
+    gsap.set($dialogueBox[2], { y:100, opacity: 0 });
+    gsap.set($dialogueBox[3], { y:100, opacity: 0 });
+    gsap.set($opentalk[0], { x:-900, opacity: 0 });
+    gsap.set($opentalk[1], { x:300, opacity: 0 });
+    
+    const intotheTunnel = gsap.timeline({ pausedt: true });
+    intotheTunnel.to($tunnel[0], { scale: 20, duration:5 }, '0')
+    
+    intotheTunnel.to($dialogueBox[0], {y:-100, opacity:1})
+    intotheTunnel.to($dialogueBox[1], {y:0, opacity:1})
+    intotheTunnel.to($dialogueBox[2], {y:-100, opacity:1})
+    intotheTunnel.to($dialogueBox[3], { y: 0, opacity: 1 })
+    
+    intotheTunnel.to($opentalk[0],{x:-300, opacity:1})
+    intotheTunnel.to($opentalk[1],{x:0, opacity:1})
+
+    ScrollTrigger.create({
+			animation: intotheTunnel,
+			trigger: $sectionTunnel,
 			scrub: 1,
-			start: "top top",
+			start: "top -50%",
 			end: "bottom bottom",
 		});
+
 
 		// timeline
 		const $sectionTimeline = $wrap.querySelector(".section-timeline");
 		const $sectionTimelineBoxes = $sectionTimeline.querySelectorAll(".box");
+    const $sectionTimelineText = $sectionTimeline.querySelector(".text svg");
+    const $zombie = $sectionTimeline.querySelector('.zombie')
+
 		gsap.set($sectionTimelineBoxes[0], { x: -100, lineHeight: 0 });
 		gsap.set($sectionTimelineBoxes[1], { x: 100 });
 		gsap.set($sectionTimelineBoxes[2], { y: 100, lineHeight: 0 });
-		gsap.set($sectionTimelineBoxes[3], { y: -100 });
+    gsap.set($sectionTimelineBoxes[3], { y: -100 });
+    gsap.set($sectionTimelineText, {scale:0.02, opacity:0, fill:"#000"})
+    gsap.set($zombie, {opacity:0, x:0})
 
 		const timeline = gsap.timeline({ paused: true });
 		timeline.to($sectionTimelineBoxes[0], { x: 0, duration: 1, ease: "cubic.out" }, 0);
 		timeline.to($sectionTimelineBoxes[1], { x: 0, duration: 1, ease: "cubic.out" }, 0);
 		timeline.to($sectionTimelineBoxes[2], { y: 0, duration: 1, ease: "cubic.out" }, 0);
 		timeline.to($sectionTimelineBoxes[3], { y: 0, duration: 1, ease: "cubic.out" }, 0);
-
+    
 		timeline.to($sectionTimelineBoxes[0], { x: 100, rotation: 180, duration: 1, ease: "back.out(2)" });
 		timeline.to($sectionTimelineBoxes[0], { borderRadius: "50%", backgroundColor: "#0f0", duration: 1, ease: "cubic.out" }, 1);
 		timeline.to($sectionTimelineBoxes[1], { x: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
@@ -96,7 +114,8 @@
 		timeline.to($sectionTimelineBoxes[2], { y: -100, rotation: -180, duration: 1, ease: "back.out(2)" }, 1);
 		timeline.to($sectionTimelineBoxes[2], { borderRadius: "50%", backgroundColor: "#00f", duration: 1, ease: "cubic.out" }, 1);
 		timeline.to($sectionTimelineBoxes[3], { y: 100, rotation: 180, duration: 1, ease: "back.out(2)" }, 1);
-		timeline.to($sectionTimelineBoxes[3], { borderRadius: "50%", backgroundColor: "#000", duration: 1, ease: "cubic.out" }, 1);
+    timeline.to($sectionTimelineBoxes[3], { borderRadius: "50%", backgroundColor: "#000", duration: 1, ease: "cubic.out" }, 1);
+    
 
 		timeline.to($sectionTimelineBoxes[0], {
 			lineHeight: 100,
@@ -127,8 +146,10 @@
 		timeline.to($sectionTimelineBoxes[1], { y: 0, duration: 3, ease: "cubic.out" }, "beforeEnd");
 		timeline.to($sectionTimelineBoxes[2], { x: 0, duration: 3, ease: "cubic.out" }, "beforeEnd");
 		timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 3, ease: "cubic.out" }, "beforeEnd");
+    timeline.to($sectionTimelineBoxes[3], { borderRadius:"0", x: 0, duration: 5, scale: 30, ease: "cubic.out" }, "endFrame");
+    timeline.to($sectionTimelineText, { scale: 2, opacity: 1, duration: 5, fill: "#fff" }, "endFrame");
+    timeline.to($zombie,{opacity:1, duration:5, x:-200}, )
 
-		timeline.to($sectionTimelineBoxes[3], { x: 0, duration: 5, scale: 5, ease: "cubic.out" }, "endFrame");
 		ScrollTrigger.create({
 			animation: timeline,
 			trigger: $sectionTimeline,
@@ -143,7 +164,7 @@
 		const $sectionLottie = $wrap.querySelector(".section-lottie");
 		const animation = lottie.loadAnimation({
 			container: $sectionLottie.querySelector(".sticky"),
-			path: "./lottie/bubble-explosion.json",
+			path: "./lottie/earth.json",
 			renderer: "svg",
 			loop: false,
 			autoplay: false,
@@ -179,7 +200,6 @@
 
 		// horizontal scroll
 		const $sectionHorizontal = $wrap.querySelector(".section-horizontal");
-		const $sectionHorizontalTitle = $sectionHorizontal.querySelector(".title");
 		const $sectionHorizontalInwrap = $sectionHorizontal.querySelector(".img-list");
 		const $sectionImageitems = $sectionHorizontalInwrap.querySelectorAll(".listitem");
 		const $sectionImagetexts = $sectionHorizontalInwrap.querySelectorAll(".block");
@@ -190,26 +210,22 @@
 		gsap.from($sectionImagetexts, { y: 200, color: "#333", duration: 1, ease: "cubic.out" });
 		gsap.to($sectionImagetexts[0], {
 			y: -100,
-			color: "#fff",
-			ease: "cubic.out",
+			ease: "elastic",
 			scrollTrigger: { trigger: $sectionHorizontal, start: "top -10%", end: "bottom bottom", scrub: 1 },
 		});
 		gsap.to($sectionImagetexts[1], {
 			y: -70,
-			color: "#f00",
-			ease: "cubic.out",
+			ease: "elastic",
 			scrollTrigger: { trigger: $sectionHorizontal, start: "top -50%", end: "bottom bottom", scrub: 1 },
 		});
 		gsap.to($sectionImagetexts[2], {
 			y: -80,
-			color: "#00f",
-			ease: "cubic.out",
+			ease: "elastic",
 			scrollTrigger: { trigger: $sectionHorizontal, start: "top -100%", end: "bottom bottom", scrub: 1 },
 		});
 		gsap.to($sectionImagetexts[3], {
 			y: -70,
-			color: "#fff",
-			ease: "cubic.out",
+			ease: "elastic",
 			scrollTrigger: { trigger: $sectionHorizontal, start: "bottom bottom", end: "bottom bottom", scrub: 1 },
 		});
 		gsap.to($cloud, {
@@ -260,105 +276,3 @@
 	gsap.ticker.add(function () {
 		stats.update();
 	});
-
-		//roll
-		select = e => document.querySelector(e);
-		selectAll = e => document.querySelectorAll(e);
-		
-		// const $sectionRoll = select('.section-roll');
-		const stage = select('.stage');
-		const tubeInner = select(".tube__inner");
-		const clone = document.getElementsByClassName("line"); // as need to update node list
-		const numLines = 10;
-		const fontSize = gsap.getProperty(':root', '--fontSize');
-		const angle = 360/numLines;
-		let radius = 0;
-		let origin = 0;
-		
-		function set3D() {
-			let width = window.innerWidth;
-			let fontSizePx = (width/100)*fontSize;
-			radius = (fontSizePx/2)/Math.sin((180/numLines)*(Math.PI/180)); // using Pythagoras Eq
-			origin = `50% 50% -${radius}px`;
-		}
-		
-		function clodeNode() {
-			
-			for (var i = 0; i < (numLines-1); i++) {
-				let newClone = clone[0].cloneNode(true); // clone the header
-				let lineClass = "line--"+(i+2); // create class name to append
-				newClone.classList.add(lineClass); // add incremented line class
-				tubeInner.appendChild(newClone); // append the clone
-			}
-			
-			clone[0].classList.add("line--1"); // add line1 class to the first node
-		}
-		
-		function positionTxt() {
-			gsap.set('.line', {
-				rotationX: function(index) {
-					return -angle*index;
-				},
-				z: radius,
-				transformOrigin: origin
-			});
-		}
-		
-		function setProps(targets) {
-			targets.forEach( function(target) {
-				let paramSet = gsap.quickSetter(target, "css");
-				let degrees = gsap.getProperty(target, "rotateX");
-				let radians = degrees * (Math.PI/180);
-				let conversion = Math.abs(Math.cos(radians) / 2 + 0.5); // 1 - 0 half cosine wave
-				let fontW = 200 + 700*conversion;
-				let fontS = `${100 + 700*conversion}%`;
-		
-				paramSet({
-					opacity: conversion+0.1, 
-					fontWeight: fontW, 
-					fontStretch: fontS 
-				});
-				console.log(fontW);
-			})
-		}
-		
-		function scrollRotate() {
-			gsap.to('.line', {
-				scrollTrigger: {
-					trigger: '.section-roll',
-					scrub: 1,
-					start: "top top",
-				},
-				rotateX: "+=1080",
-				onUpdate: function() {
-					setProps(this.targets());
-				}
-			})
-			
-			gsap.to('.tube', {
-				scrollTrigger: {
-					trigger: '.section-roll',
-					scrub: 1,
-					start: "top top"
-				},
-				perspective: '1vw',
-				ease: 'expo.out'
-			})
-		}
-		
-		function init() {
-			clodeNode();
-			set3D();
-			window.onresize = () => {
-				set3D();
-				positionTxt();
-			}
-			positionTxt(); 
-			setProps(gsap.utils.toArray(".line"));
-			scrollRotate();
-			gsap.to(stage, { autoAlpha: 1, duration: 2, delay: 2 });
-		}
-		
-		window.onload = () => {
-			init();
-		};

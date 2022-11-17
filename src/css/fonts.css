@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url("/static/fonts/NaverNanumSquareNeo/woff/NanumSquareNeoTTF-aLt.woff") format("woff"), url("/static/fonts/NaverNanumSquareNeo/TTF/NanumSquareNeo-aLt.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url("/static/fonts/NaverNanumSquareNeo/woff/NanumSquareNeoTTF-bRg.woff") format("woff"), url("/static/fonts/NaverNanumSquareNeo/TTF/NanumSquareNeo-bRg.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url("/static/fonts/NaverNanumSquareNeo/woff/NanumSquareNeoTTF-cBd.woff") format("woff"), url("/static/fonts/NaverNanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf") format("ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url("/static/fonts/NaverNanumSquareNeo/woff/NanumSquareNeoTTF-dEb.woff") format("woff"), url("/static/fonts/NaverNanumSquareNeo/TTF/NanumSquareNeo-dEb.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url("/static/fonts/NaverNanumSquareNeo/woff/NanumSquareNeoTTF-eHv.woff") format("woff"), url("/static/fonts/NaverNanumSquareNeo/TTF/NanumSquareNeo-eHv.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}

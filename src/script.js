@@ -5,8 +5,6 @@ import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import gsap from "gsap";
 
-
-
 /**
  * Base
  */
@@ -28,8 +26,11 @@ gltfLoader.setDRACOLoader(dracoLoader);
 let model;
 let mixer;
 const mixers = [];
-const models = []
-const COUNTER = 10;
+const models = [];
+const radians = [];
+const speed = [];
+
+const COUNTER = 20;
 
 gltfLoader.load(
 	"/models/human/human.gltf",
@@ -54,8 +55,11 @@ gltfLoader.load(
 
     for (let i = 0; i < COUNTER; i++) {
       models.push(clone(model))
+      radians.push(2 * Math.PI * Math.random())
+      speed.push(Math.random() * 2 + 10)
       mixers.push(new THREE.AnimationMixer(models[i]))
       mixers[i].clipAction(gltf.animations[0]).play()
+
       scene.add(models[i]);
     }
 	},
@@ -72,11 +76,13 @@ gltfLoader.load(
  */
 const floor = new THREE.Mesh(
 	new THREE.PlaneGeometry(10, 10),
-	new THREE.MeshStandardMaterial({
+  new THREE.MeshStandardMaterial({
+    color: "#ffffff",
 		metalness: 0,
-		roughness: 1,
+		roughness: 0.5,
 	})
 );
+
 floor.receiveShadow = true;
 floor.castShadow = true;
 floor.rotation.x = -Math.PI * 0.5;
@@ -88,21 +94,10 @@ scene.add(floor);
 // const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 // scene.add(ambientLight);
 
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 0.001);
-// const lightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
-// directionalLight.castShadow = true;
-// directionalLight.shadow.mapSize.set(1024, 1024);
-// directionalLight.shadow.camera.far = 15;
-// directionalLight.shadow.camera.left = -7;
-// directionalLight.shadow.camera.top = 7;
-// directionalLight.shadow.camera.right = 7;
-// directionalLight.shadow.camera.bottom = -7;
-// directionalLight.position.set(0, 5, 0);
-// scene.add(directionalLight, lightHelper);
-const light = new THREE.DirectionalLight( 0xffffff, 0.5, 1000 );
-light.position.set( 0, 100, 0 );
+const light = new THREE.DirectionalLight( 0xffffff, 0.5, 100 );
+light.position.set( 10, 10, 0 );
 light.castShadow = true;
-light.shadow.camera.near = 1;
+light.shadow.camera.near = 0.1;
 scene.add( light );
 
 /**
@@ -116,7 +111,7 @@ const sizes = {
 window.addEventListener("resize", () => {
 	// Update sizes
 	sizes.width = window.innerWidth;
-	sizes.height = window.innerHeight;
+	sizes.height = window.innerHeight *2;
 
 	// Update camera
 	camera.aspect = sizes.width / sizes.height;
@@ -176,8 +171,6 @@ function createAnimation(mixer, action, clip) {
 		},
 	};
 
-  let radian = 2 * Math.PI;
-
 	let scrollingTL = gsap.timeline({
 		scrollTrigger: {
 			trigger: sectionIntro,
@@ -189,17 +182,22 @@ function createAnimation(mixer, action, clip) {
         
         for (let i = 0; i < models.length; i++){
           mixers[i].setTime(self.progress * 10);
-          models[i].position.x = Math.cos((radian / models.length) * i) * 5 * self.progress;
-          models[i].position.z = Math.sin((radian / models.length)* i)  * 5 * self.progress;
-          //Math.random()
+          models[i].position.x = Math.cos((radians[i] / models.length) * i) * speed[i] * self.progress/2 ;
+          models[i].position.z = Math.sin((radians[i] / models.length)* i)  * speed[i] * self.progress/2 ;
+
         }
       }
 		},
-	});
+  });
+  
+  scrollingTL.to(proxy, {
+    time: clip.duration,
+    repeat: 20,
+  });
 }
 
 
-  let raf;
+let raf;
 const tick = () => {
 	const elapsedTime = clock.getElapsedTime();
 	const deltaTime = elapsedTime - previousTime;
@@ -207,8 +205,6 @@ const tick = () => {
 	//Update mixer
 	for (const mixer of mixers) mixer.update(deltaTime);
 	// if (mixer) mixer.update(deltaTime);
-
-	// Call tick again on the next frame
 	raf = window.requestAnimationFrame(tick);
 };
 
