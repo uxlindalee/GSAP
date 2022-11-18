@@ -11,9 +11,8 @@
 		const $sectionLogo = $wrap.querySelector(".section-logo");
 		gsap.fromTo(
 			$sectionLogo.querySelector(".svg-title"),
-			{ scale: 10, fill: "#2db400" },
+			{ fill: "#2db400" },
 			{
-				scale: 0.5,
 				fill: "#ffffff",
 				ease: "expo.easeOut",
 				scrollTrigger: {
