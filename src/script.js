@@ -30,7 +30,7 @@ const models = [];
 const radians = [];
 const speed = [];
 
-const COUNTER = 20;
+const COUNTER = 30;
 
 gltfLoader.load(
 	"/models/human/human.gltf",
@@ -78,8 +78,8 @@ const floor = new THREE.Mesh(
 	new THREE.PlaneGeometry(10, 10),
   new THREE.MeshStandardMaterial({
     color: "#ffffff",
-		metalness: 0,
-		roughness: 0.5,
+    metalness: 0,
+    roughness: 0.5,
 	})
 );
 
@@ -94,11 +94,15 @@ scene.add(floor);
 // const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 // scene.add(ambientLight);
 
-const light = new THREE.DirectionalLight( 0xffffff, 0.5, 100 );
+const light = new THREE.DirectionalLight( 0xffffff, 1);
 light.position.set( 10, 10, 0 );
 light.castShadow = true;
-light.shadow.camera.near = 0.1;
-scene.add( light );
+light.shadow.mapSize.width = 1024;
+light.shadow.mapSize.height = 1024; 
+light.shadow.camera.near = 0.1; 
+light.shadow.camera.far = 100;
+scene.add(light);
+
 
 /**
  * Sizes
