@@ -39,19 +39,19 @@
     )
 
 		//intro
-		const $sectionIntro = $wrap.querySelector(".section-intro");
-		let searchBox = $sectionIntro.querySelector(".search-keyword");
+		// const $sectionIntro = $wrap.querySelector(".section-intro");
+		// let searchBox = $sectionIntro.querySelector(".search-keyword");
 
-		ScrollTrigger.create({
-			trigger: $sectionIntro,
-			start: "top center",
-			end: "bottom bottom",
-			onEnter: () => searchTyper(),
-			onLeaveBack: () => searchTyper(),
-		});
-		function searchTyper() {
-			searchBox.classList.toggle("on");
-		}
+		// ScrollTrigger.create({
+		// 	trigger: $sectionIntro,
+		// 	start: "top center",
+		// 	end: "bottom bottom",
+		// 	onEnter: () => searchTyper(),
+		// 	onLeaveBack: () => searchTyper(),
+		// });
+		// function searchTyper() {
+		// 	searchBox.toggleClass("on");
+		// }
 
 		//Tunnel
 		const $sectionTunnel = $wrap.querySelector(".section-tunnel");

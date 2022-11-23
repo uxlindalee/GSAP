@@ -5,9 +5,7 @@ import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import gsap from "gsap";
 
-/**
- * Base
- */
+
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -65,10 +63,10 @@ gltfLoader.load(
 	},
 
 	progress => {
-		console.log("progress", progress);
+		// console.log("progress", progress);
 	},
 	error => {
-		console.log("error", error);
+		// console.log("error", error);
 	}
 );
 /**
@@ -132,7 +130,6 @@ window.addEventListener("resize", () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1,100);
-// const cameraHelper = new THREE.CameraHelper(camera);
 camera.position.z = 0;
 camera.position.y = 3;
 camera.lookAt(0, Math.PI * -2, 0);
