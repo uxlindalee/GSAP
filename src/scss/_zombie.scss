@@ -1,20 +1,20 @@
 .zombie {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/250758/zombie-1.png");
-  background-repeat: no-repeat;
-  animation: zombie steps(16);
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-direction: normal;
-  min-width: 194px;
-  min-height: 255px;
-  background-position: 0 top;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: 14vh 0 0 18vw;
-}
-@keyframes zombie {
-  to {
-    background-position: 0 -4080px;
-  }
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/250758/zombie-1.png");
+    background-repeat: no-repeat;
+    animation: zombie steps(16);
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    min-width: 194px;
+    min-height: 255px;
+    background-position: 0 top;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 14vh 0 0 18vw;
+    }
+    @keyframes zombie {
+    to {
+        background-position: 0 -4080px;
+    }
 }

@@ -68,10 +68,10 @@ let marqueeText = document.querySelector('.marquee p');
 const io = new IntersectionObserver(entries => {
 	entries.forEach(entry => {
 		if (entry.isIntersecting) {
-      marqueeText.classList.remove('marquee--play');
-      marqueeText.classList.add('marquee--play');
+            marqueeText.classList.remove('marquee--play');
+            marqueeText.classList.add('marquee--play');
 		} else {
-      marqueeText.classList.remove('marquee--play');
+            marqueeText.classList.remove('marquee--play');
 		}
 	});
 });

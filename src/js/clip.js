@@ -9,9 +9,9 @@ let clipRadius = +circle.getAttribute("r");
 let imgWidth, imgHeight;
 
 gsap.set($clipImg, {
-  scale: 2,
-  xPercent: -50,
-  yPercent: -50
+    scale: 2,
+    xPercent: -50,
+    yPercent: -50
 });
 
 var tl = gsap.timeline({
