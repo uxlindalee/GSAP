@@ -93,11 +93,13 @@ body {
   min-height: 100vh;
 }
 
-html, body {
+html,
+body {
   font-family: "NanumSquareNeo";
 }
 
-.webgl, .webgl-person {
+.webgl,
+.webgl-person {
   position: relative;
   top: 0;
   left: 0;
@@ -160,6 +162,11 @@ section .sticky h2 {
 /***** Naver Logo *****/
 .section-logo {
   height: 400vh;
+}
+.section-logo .title {
+  text-indent: -9999px;
+  opacity: 0;
+  color: #fff;
 }
 .section-logo .svg-title {
   position: absolute;
@@ -341,7 +348,8 @@ section .sticky h2 {
     border-color: #2db400;
   }
 }
-.section-intro .search-bar p::before, .section-intro .search-bar p::after {
+.section-intro .search-bar p::before,
+.section-intro .search-bar p::after {
   position: absolute;
   left: 0;
   z-index: 3;
@@ -502,7 +510,8 @@ section .sticky h2 {
   position: relative;
   top: 50%;
   left: 50%;
-  height: 100vh;
+  width: 100vw;
+  height: auto;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -719,21 +728,8 @@ section .sticky h2 {
 }
 
 /***** Section Roll *****/
-:root {
-  --fontSize: 4;
-}
-
-@font-face {
-  font-family: "Bandeins-Strange";
-  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/61488/BandeinsStrangeVariableGX.ttf") format("truetype");
-  font-stretch: 100% 800%;
-  font-weight: 200 800;
-  font-display: block;
-}
 .section-roll {
   color: white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   height: 500vh;
   background: #000;
 }
@@ -770,7 +766,6 @@ section .sticky h2 {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   margin: 0;
-  font-family: "Bandeins-Strange";
   font-size: calc(var(--fontSize) * 1vw);
   font-stretch: 800%;
   font-weight: 800;
@@ -810,72 +805,4 @@ section .sticky h2 {
   to {
     background-position: 0 -4080px;
   }
-}
-.section-slider {
-  height: 200vh;
-  background: #252825;
-  /* colours
-  ----------------------------------------- */
-}
-.section-slider .title {
-  color: #fff;
-  z-index: 1;
-}
-.section-slider .wrapper {
-  position: relative;
-  display: block;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  -webkit-transform: rotateX(40deg);
-          transform: rotateX(40deg);
-  -webkit-transform: translate(0, -15vh);
-          transform: translate(0, -15vh);
-}
-.section-slider .slides {
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  -webkit-perspective: 200px;
-          perspective: 200px;
-  padding: 50px 0;
-}
-.section-slider .slide {
-  position: relative;
-  margin: auto;
-  width: 33.3333%;
-  height: 30vh;
-  -webkit-box-shadow: inset 0 0 0 5px rgba(200, 200, 200, 0.25);
-          box-shadow: inset 0 0 0 5px rgba(200, 200, 200, 0.25);
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
-  -webkit-transform: rotateX(-40deg);
-          transform: rotateX(-40deg);
-}
-.section-slider .slide > .topic {
-  color: #fff;
-  font-size: 275%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  white-space: nowrap;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  text-transform: uppercase;
-}
-.section-slider .slide:nth-child(1) {
-  background: hsla(0deg, 70%, 50%, 0.5);
-}
-.section-slider .slide:nth-child(2) {
-  background: hsla(45deg, 70%, 50%, 0.5);
-}
-.section-slider .slide:nth-child(3) {
-  background: hsla(90deg, 70%, 50%, 0.5);
-}
-.section-slider .slide:nth-child(4) {
-  background: hsla(135deg, 70%, 50%, 0.5);
-}
-.section-slider .slide:nth-child(5) {
-  background: hsla(180deg, 70%, 50%, 0.5);
-}
-.section-slider .slide:nth-child(6) {
-  background: hsla(215deg, 70%, 50%, 0.5);
 }
